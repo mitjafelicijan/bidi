@@ -26,6 +26,15 @@ static int lua_getfield_int_opt(lua_State *L, int index, const char *key, int de
 	return val;
 }
 
+static int load_embedded_module(lua_State *L, const char* module_code, size_t code_len, const char* module_name) {
+	if (luaL_loadbuffer(L, module_code, code_len, module_name) || lua_pcall(L, 0, 1, 0)) {
+		fprintf(stderr, "Error loading %s: %s\n", module_name, lua_tostring(L, -1));
+		return 0;
+	}
+	lua_setglobal(L, module_name);
+	return 1;
+}
+
 static int l_open_window(lua_State *L) {
 	int width = luaL_checknumber(L, 1);
 	int height = luaL_checknumber(L, 2);
@@ -98,29 +107,10 @@ int main(void) {
 	lua_register(L, "draw_fps", l_draw_fps);
 	lua_register(L, "clear_window", l_clear_window);
 
-	// Embedding JSON module.
-	if (luaL_loadbuffer(L, json, json_len, "json") || lua_pcall(L, 0, 1, 0)) {
-		fprintf(stderr, "Error loading json.lua: %s\n", lua_tostring(L, -1));
-		lua_close(L);
-		return 1;
-	}
-	lua_setglobal(L, "json");
-
-	// Embedding color module.
-	if (luaL_loadbuffer(L, color, color_len, "color") || lua_pcall(L, 0, 1, 0)) {
-		fprintf(stderr, "Error loading color.lua: %s\n", lua_tostring(L, -1));
-		lua_close(L);
-		return 1;
-	}
-	lua_setglobal(L, "color");
-
-	// Embedding tilemap module.
-	if (luaL_loadbuffer(L, tilemap, tilemap_len, "tilemap") || lua_pcall(L, 0, 1, 0)) {
-		fprintf(stderr, "Error loading tilemap.lua: %s\n", lua_tostring(L, -1));
-		lua_close(L);
-		return 1;
-	}
-	lua_setglobal(L, "tilemap");
+	// Loading embeded modules into Lua state.
+	if (!load_embedded_module(L, json, json_len, "json")) return 1;
+	if (!load_embedded_module(L, color, color_len, "color")) return 1;
+	if (!load_embedded_module(L, tilemap, tilemap_len, "tilemap")) return 1;
 
 	// Interpreting and running input file Lua script.
 	if (luaL_loadfile(L, IN_FILE) || lua_pcall(L, 0, 0, 0)) {
