@@ -1,6 +1,8 @@
-# Bianry files
+# Binary files
 bidi
+vendor/lua*/src/lua
+vendor/lua*/src/luac
 
-# Build artefacts
+# Build artifacts
 vendor/lua*/**/*.o
 vendor/lua*/**/*.a
