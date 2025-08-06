@@ -15,6 +15,10 @@ $(LUA_T)	vendor/lua-5.4.8/src/Makefile	/^$(LUA_T): $(LUA_O) $(LUA_A)$/;"	t
 $(PLATS)	vendor/lua-5.4.8/Makefile	/^$(PLATS) help test clean:$/;"	t
 $(PROG)	Makefile	/^$(PROG): $(PROG_C)$/;"	t
 %.h	Makefile	/^%.h: %.lua$/;"	t
+0	test/test.json	/^	"numbers": [1, 3, 5, 2]$/;"	n	array:numbers
+1	test/test.json	/^	"numbers": [1, 3, 5, 2]$/;"	n	array:numbers
+2	test/test.json	/^	"numbers": [1, 3, 5, 2]$/;"	n	array:numbers
+3	test/test.json	/^	"numbers": [1, 3, 5, 2]$/;"	n	array:numbers
 ABSLINEINFO	vendor/lua-5.4.8/src/ldebug.h	/^#define ABSLINEINFO	/;"	d
 ABSTKEYCONSTANT	vendor/lua-5.4.8/src/lobject.h	/^#define ABSTKEYCONSTANT	/;"	d
 AGEBITS	vendor/lua-5.4.8/src/lgc.h	/^#define AGEBITS	/;"	d
@@ -3619,6 +3623,7 @@ loadUpvalues	vendor/lua-5.4.8/src/lundump.c	/^static void loadUpvalues (LoadStat
 loadVar	vendor/lua-5.4.8/src/lundump.c	/^#define loadVar(/;"	d	file:
 loadVector	vendor/lua-5.4.8/src/lundump.c	/^#define loadVector(/;"	d	file:
 load_aux	vendor/lua-5.4.8/src/lbaselib.c	/^static int load_aux (lua_State *L, int status, int envidx) {$/;"	f	typeref:typename:int	file:
+load_embedded_module	main.c	/^static int load_embedded_module(lua_State *L, const char *module_code, size_t code_len, const ch/;"	f	typeref:typename:int	file:
 loadedlibs	vendor/lua-5.4.8/src/linit.c	/^static const luaL_Reg loadedlibs[] = {$/;"	v	typeref:typename:const luaL_Reg[]	file:
 loadfunc	vendor/lua-5.4.8/src/loadlib.c	/^static int loadfunc (lua_State *L, const char *filename, const char *modname) {$/;"	f	typeref:typename:int	file:
 loadlib.o	vendor/lua-5.4.8/src/Makefile	/^loadlib.o: loadlib.c lprefix.h lua.h luaconf.h lauxlib.h lualib.h$/;"	t
@@ -4795,6 +4800,7 @@ nabslineinfo	vendor/lua-5.4.8/src/lparser.h	/^  int nabslineinfo;  \/* number of
 nactvar	vendor/lua-5.4.8/src/lparser.c	/^  lu_byte nactvar;  \/* # active locals outside the block *\/$/;"	m	struct:BlockCnt	typeref:typename:lu_byte	file:
 nactvar	vendor/lua-5.4.8/src/lparser.h	/^  lu_byte nactvar;  \/* number of active local variables *\/$/;"	m	struct:FuncState	typeref:typename:lu_byte
 nactvar	vendor/lua-5.4.8/src/lparser.h	/^  lu_byte nactvar;  \/* number of active variables in that position *\/$/;"	m	struct:Labeldesc	typeref:typename:lu_byte
+name	test/test.json	/^	"name": "Bob",$/;"	s
 name	vendor/lua-5.4.8/src/lauxlib.h	/^  const char *name;$/;"	m	struct:luaL_Reg	typeref:typename:const char *
 name	vendor/lua-5.4.8/src/ldo.c	/^  const char *name;$/;"	m	struct:SParser	typeref:typename:const char *	file:
 name	vendor/lua-5.4.8/src/lobject.h	/^  TString *name;  \/* upvalue name (for debug information) *\/$/;"	m	struct:Upvaldesc	typeref:typename:TString *
@@ -4858,6 +4864,7 @@ ntransfer	vendor/lua-5.4.8/src/lstate.h	/^      unsigned short ntransfer;  \/* n
 ntransfer	vendor/lua-5.4.8/src/lua.h	/^  unsigned short ntransfer;   \/* (r) number of transferred values *\/$/;"	m	struct:lua_Debug	typeref:typename:unsigned short
 num2straux	vendor/lua-5.4.8/src/lstrlib.c	/^static int num2straux (char *buff, int sz, lua_Number x) {$/;"	f	typeref:typename:int	file:
 numarith	vendor/lua-5.4.8/src/lobject.c	/^static lua_Number numarith (lua_State *L, int op, lua_Number v1,$/;"	f	typeref:typename:lua_Number	file:
+numbers	test/test.json	/^	"numbers": [1, 3, 5, 2]$/;"	a
 numparams	vendor/lua-5.4.8/src/lobject.h	/^  lu_byte numparams;  \/* number of fixed (named) parameters *\/$/;"	m	struct:Proto	typeref:typename:lu_byte
 numusearray	vendor/lua-5.4.8/src/ltable.c	/^static unsigned int numusearray (const Table *t, unsigned int *nums) {$/;"	f	typeref:typename:unsigned int	file:
 numusehash	vendor/lua-5.4.8/src/ltable.c	/^static int numusehash (const Table *t, unsigned int *nums, unsigned int *pna) {$/;"	f	typeref:typename:int	file:
@@ -5734,6 +5741,8 @@ testMMMode	vendor/lua-5.4.8/src/lopcodes.h	/^#define testMMMode(/;"	d
 testOTMode	vendor/lua-5.4.8/src/lopcodes.h	/^#define testOTMode(/;"	d
 testTMode	vendor/lua-5.4.8/src/lopcodes.h	/^#define testTMode(/;"	d
 test_eof	vendor/lua-5.4.8/src/liolib.c	/^static int test_eof (lua_State *L, FILE *f) {$/;"	f	typeref:typename:int	file:
+test_graphics	test/main.lua	/^function test_graphics()$/;"	f
+test_json	test/main.lua	/^function test_json()$/;"	f
 test_then_block	vendor/lua-5.4.8/src/lparser.c	/^static void test_then_block (LexState *ls, int *escapelist) {$/;"	f	typeref:typename:void	file:
 testbit	vendor/lua-5.4.8/src/lgc.h	/^#define testbit(/;"	d
 testbits	vendor/lua-5.4.8/src/lgc.h	/^#define testbits(/;"	d
@@ -5764,7 +5773,7 @@ th	vendor/lua-5.4.8/src/lstate.h	/^  struct lua_State th;  \/* thread *\/$/;"	m	
 thvalue	vendor/lua-5.4.8/src/lobject.h	/^#define thvalue(/;"	d
 tilemap	stdlib/tilemap.h	/^unsigned char tilemap[] = {$/;"	v	typeref:typename:unsigned char[]
 tilemap_H	stdlib/tilemap.h	/^#define tilemap_H$/;"	d
-tilemap_len	stdlib/tilemap.h	/^unsigned int tilemap_len = 124;$/;"	v	typeref:typename:unsigned int
+tilemap_len	stdlib/tilemap.h	/^unsigned int tilemap_len = 35;$/;"	v	typeref:typename:unsigned int
 times5	vendor/lua-5.4.8/src/lmathlib.c	/^static Rand64 times5 (Rand64 i) {$/;"	f	typeref:typename:Rand64	file:
 times9	vendor/lua-5.4.8/src/lmathlib.c	/^static Rand64 times9 (Rand64 i) {$/;"	f	typeref:typename:Rand64	file:
 tinsert	vendor/lua-5.4.8/src/ltablib.c	/^static int tinsert (lua_State *L) {$/;"	f	typeref:typename:int	file:
