@@ -89,7 +89,7 @@ static int l_clear_window(lua_State *L) {
 	return 0;
 }
 
-static int l_draw_fps(lua_State *L) {
+static int l_draw_fps_meter(lua_State *L) {
 	DrawFPS(GetScreenWidth() - 100, 20); 
 	return 0;
 }
@@ -160,7 +160,7 @@ int main(int argc, char *argv[]) {
 		lua_register(L, "begin_drawing", l_begin_drawing);
 		lua_register(L, "end_drawing", l_end_drawing);
 		lua_register(L, "set_fps", l_set_fps);
-		lua_register(L, "draw_fps", l_draw_fps);
+		lua_register(L, "draw_fps_meter", l_draw_fps_meter);
 		lua_register(L, "clear_window", l_clear_window);
 
 		// Loading embeded modules into Lua state.
