@@ -25,6 +25,5 @@ color.WHITE      = { r = 255, g = 255, b = 255, a = 255 }
 color.BLACK      = { r = 0,   g = 0,   b = 0,   a = 255 }
 color.BLANK      = { r = 0,   g = 0,   b = 0,   a = 0   }
 color.MAGENTA    = { r = 255, g = 0,   b = 255, a = 255 }
-color.RAYWHITE   = { r = 245, g = 245, b = 245, a = 255 }
 
 return color
