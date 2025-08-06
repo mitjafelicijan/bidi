@@ -1,7 +1,8 @@
 # Bidi - Game development framework
 
 Bidi is a tiny framework for developing small video games for recreational
-purpose. It takes heavy inspiration from LÖVE and Pico8.
+purpose. It takes heavy inspiration from [LÖVE](https://www.love2d.org/) and
+[Pico8](https://www.lexaloffle.com/pico-8.php).
 
 You develop your games in Lua and you are only allowed to have one Lua file
 where all your code lives. You can then load external assets like images and
