@@ -19,6 +19,7 @@ sounds.
 - https://github.com/rxi/microtar
 - https://github.com/lua/lua
 - https://github.com/raysan5/raylib
+- https://github.com/rxi/json.lua
 
 ## Inspiration & Materials
 
