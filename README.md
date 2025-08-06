@@ -7,6 +7,12 @@ You develop your games in Lua and you are only allowed to have one Lua file
 where all your code lives. You can then load external assets like images and
 sounds.
 
+> [!IMPORTANT]
+> The Raylib library in the `vendor` folder contains prebuilt artifacts. All
+> libraries are also available in the `archive` folder. You can manually
+> download and replace them from official repositories if desired; they have
+> not been tampered with.
+
 ## Libraries
 
 - https://github.com/rxi/microtar
