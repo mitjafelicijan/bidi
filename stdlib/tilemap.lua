@@ -1,0 +1,2 @@
+-- This is a placeholder file for potential standard library that extends the
+-- framework with additional functionalities.

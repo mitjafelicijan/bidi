@@ -1,0 +1,6 @@
+# Bianry files
+bidi
+
+# Build artefacts
+vendor/lua*/**/*.o
+vendor/lua*/**/*.a
