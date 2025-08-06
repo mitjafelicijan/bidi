@@ -12,8 +12,19 @@
 #include "stdlib/color.h"
 #include "stdlib/tilemap.h"
 
+#include "fonts/dejavusans_mono_bold.h"
+
 #define VERSION "x.x"
 #define DEBUG_LEVEL LOG_DEBUG
+#define FONT_IMPORT_SIZE 30
+
+typedef struct {
+	Font font;
+	int font_size;
+} Context;
+
+// Setting up global context.
+Context ctx = {0};
 
 static int lua_getfield_int(lua_State *L, int index, const char *key) {
 	lua_getfield(L, index, key);
@@ -45,6 +56,15 @@ static int l_open_window(lua_State *L) {
 	SetConfigFlags(FLAG_WINDOW_RESIZABLE | FLAG_VSYNC_HINT | FLAG_WINDOW_HIGHDPI);
 	InitWindow(width, height, title);
 	TraceLog(LOG_DEBUG, "l_open_window");
+
+	ctx.font_size = FONT_IMPORT_SIZE;
+	ctx.font = LoadFontFromMemory(".ttf", dejavusans_mono_bold, dejavusans_mono_bold_len, ctx.font_size, NULL, 0);
+	SetTextureFilter(ctx.font.texture, TEXTURE_FILTER_TRILINEAR);
+
+	if (!IsFontValid(ctx.font)) {
+		printf("font not valid\n");
+	}
+
 	return 0;
 }
 
@@ -91,6 +111,19 @@ static int l_clear_window(lua_State *L) {
 
 static int l_draw_fps_meter(lua_State *L) {
 	DrawFPS(GetScreenWidth() - 100, 20); 
+	return 0;
+}
+
+static int l_draw_info(lua_State *L) {
+	float delta = GetFrameTime();
+	int fps = GetFPS();
+	double runtime = GetTime();
+	int height = GetScreenHeight();
+
+	DrawTextEx(ctx.font, TextFormat("dt: %f", delta), (Vector2){ 20, height - 80 }, 20, 0, RAYWHITE);
+	DrawTextEx(ctx.font, TextFormat("run: %f", runtime), (Vector2){ 20, height - 60 }, 20, 0, RAYWHITE);
+	DrawTextEx(ctx.font, TextFormat("fps: %d", fps), (Vector2){ 20, height - 40 }, 20, 0, RAYWHITE);
+
 	return 0;
 }
 
@@ -150,6 +183,7 @@ int main(int argc, char *argv[]) {
 	if (run_file) {
 		SetTraceLogLevel(debug_level);
 
+
 		lua_State *L = luaL_newstate();
 		luaL_openlibs(L);
 
@@ -161,6 +195,7 @@ int main(int argc, char *argv[]) {
 		lua_register(L, "end_drawing", l_end_drawing);
 		lua_register(L, "set_fps", l_set_fps);
 		lua_register(L, "draw_fps_meter", l_draw_fps_meter);
+		lua_register(L, "draw_info", l_draw_info);
 		lua_register(L, "clear_window", l_clear_window);
 
 		// Loading embeded modules into Lua state.
@@ -174,6 +209,7 @@ int main(int argc, char *argv[]) {
 			return 1;
 		}
 
+		UnloadFont(ctx.font);                                                           // Unload font from GPU memory (VRAM)
 		lua_close(L);
 	}
 
