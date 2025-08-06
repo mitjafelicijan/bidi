@@ -15,5 +15,6 @@ sounds.
 
 ## Inspiration & Materials
 
-https://www.love2d.org/wiki/Main_Page
-https://www.lexaloffle.com/dl/docs/pico-8_manual.html
+- https://www.love2d.org/wiki/Main_Page
+- https://www.lexaloffle.com/dl/docs/pico-8_manual.html
+- https://home.cs.colorado.edu/~main/bgi/doc/
