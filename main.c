@@ -5,8 +5,9 @@
 #include "lualib.h"
 #include "lauxlib.h"
 
-#include "stdlib/color.h"
 #include "stdlib/json.h"
+#include "stdlib/color.h"
+#include "stdlib/tilemap.h"
 
 #define IN_FILE "test/main.lua"
 #define DEBUG_LEVEL LOG_DEBUG
@@ -97,6 +98,14 @@ int main(void) {
 	lua_register(L, "draw_fps", l_draw_fps);
 	lua_register(L, "clear_window", l_clear_window);
 
+	// Embedding JSON module.
+	if (luaL_loadbuffer(L, json, json_len, "json") || lua_pcall(L, 0, 1, 0)) {
+		fprintf(stderr, "Error loading json.lua: %s\n", lua_tostring(L, -1));
+		lua_close(L);
+		return 1;
+	}
+	lua_setglobal(L, "json");
+
 	// Embedding color module.
 	if (luaL_loadbuffer(L, color, color_len, "color") || lua_pcall(L, 0, 1, 0)) {
 		fprintf(stderr, "Error loading color.lua: %s\n", lua_tostring(L, -1));
@@ -105,13 +114,13 @@ int main(void) {
 	}
 	lua_setglobal(L, "color");
 
-	// Embedding JSON module.
-	if (luaL_loadbuffer(L, json, json_len, "json") || lua_pcall(L, 0, 1, 0)) {
-		fprintf(stderr, "Error loading json.lua: %s\n", lua_tostring(L, -1));
+	// Embedding tilemap module.
+	if (luaL_loadbuffer(L, tilemap, tilemap_len, "tilemap") || lua_pcall(L, 0, 1, 0)) {
+		fprintf(stderr, "Error loading tilemap.lua: %s\n", lua_tostring(L, -1));
 		lua_close(L);
 		return 1;
 	}
-	lua_setglobal(L, "json");
+	lua_setglobal(L, "tilemap");
 
 	// Interpreting and running input file Lua script.
 	if (luaL_loadfile(L, IN_FILE) || lua_pcall(L, 0, 0, 0)) {
