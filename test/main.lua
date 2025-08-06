@@ -1,23 +1,29 @@
-for i = 0, 3 do
-	print(string.format("Hi %d times", i))
+function test_json()
+	local file = io.open("test/test.json", "r")
+	local content = file:read("*a")
+	file:close()
+
+	local data = json.decode(content)
+
+	print("name: " .. data.name)
+	for _, n in pairs(data.numbers) do
+		print(" - number: " .. n)
+	end
 end
 
-local file = io.open("test/test.txt", "r")
-local content = file:read("*a")
-print(content)
-file:close()
+function test_graphics()
+	open_window(600, 600, "My Game")
+	set_fps(60)
 
-open_window(600, 600, "My Game")
-set_fps(60)
+	while window_running() do
+		begin_drawing()
+		clear_window(color.RAYWHITE)
+		draw_fps()
+		end_drawing()
+	end
 
-BLACK = { r = 0, g = 0, b = 0 }
-
-while window_running() do
-	begin_drawing()
-	clear_window(color.VIOLET)
-
-	draw_fps()
-	end_drawing()
+	close_window()
 end
 
-close_window()
+test_json()
+test_graphics()

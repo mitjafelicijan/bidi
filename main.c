@@ -6,6 +6,7 @@
 #include "lauxlib.h"
 
 #include "stdlib/color.h"
+#include "stdlib/json.h"
 
 #define IN_FILE "test/main.lua"
 #define DEBUG_LEVEL LOG_DEBUG
@@ -86,6 +87,7 @@ int main(void) {
 	lua_State *L = luaL_newstate();
 	luaL_openlibs(L);
 
+	// Registring Raylib mappings.
 	lua_register(L, "open_window", l_open_window);
 	lua_register(L, "close_window", l_close_window);
 	lua_register(L, "window_running", l_window_running);
@@ -95,6 +97,7 @@ int main(void) {
 	lua_register(L, "draw_fps", l_draw_fps);
 	lua_register(L, "clear_window", l_clear_window);
 
+	// Embedding color module.
 	if (luaL_loadbuffer(L, color, color_len, "color") || lua_pcall(L, 0, 1, 0)) {
 		fprintf(stderr, "Error loading color.lua: %s\n", lua_tostring(L, -1));
 		lua_close(L);
@@ -102,8 +105,15 @@ int main(void) {
 	}
 	lua_setglobal(L, "color");
 
-	// TODO: This should probably use loadbuffer instead.
-	// https://www.lua.org/manual/5.4/manual.html#luaL_loadbuffer
+	// Embedding JSON module.
+	if (luaL_loadbuffer(L, json, json_len, "json") || lua_pcall(L, 0, 1, 0)) {
+		fprintf(stderr, "Error loading json.lua: %s\n", lua_tostring(L, -1));
+		lua_close(L);
+		return 1;
+	}
+	lua_setglobal(L, "json");
+
+	// Interpreting and running input file Lua script.
 	if (luaL_loadfile(L, IN_FILE) || lua_pcall(L, 0, 0, 0)) {
 		fprintf(stderr, "Error: %s\n", lua_tostring(L, -1));
 		return 1;
