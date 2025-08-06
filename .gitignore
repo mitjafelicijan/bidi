@@ -7,3 +7,6 @@ vendor/lua*/src/luac
 # Build artifacts
 vendor/lua*/**/*.o
 vendor/lua*/**/*.a
+
+# Other
+tags
