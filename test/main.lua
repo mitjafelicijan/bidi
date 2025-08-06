@@ -18,7 +18,7 @@ function test_graphics()
 	while window_running() do
 		begin_drawing()
 		clear_window(color.BLACK)
-		draw_fps()
+		draw_fps_meter()
 		end_drawing()
 	end
 
