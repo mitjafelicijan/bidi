@@ -99,6 +99,7 @@ static void help(const char *argv0) {
 			"\nAvailable options:\n"
 			"  -r,--run=file.lua            run input file\n"
 			"  -b,--bundle                  bundles this folder\n"
+			"  -d,--debug                   prints debug information\n"
 			"  -h,--help                    this help\n"
 			"  -v,--version                 show version\n",
 			argv0);
@@ -109,9 +110,13 @@ static void version(const char *argv0) {
 }
 
 int main(int argc, char *argv[]) {
-	const char short_options[] = "r:bhv";
+	TraceLogLevel debug_level = LOG_WARNING;
+	const char *run_file = NULL;
+
+	const char short_options[] = "r:dbhv";
 	const struct option long_options[] = {
 		{ "run", 1, NULL, 'r' },
+		{ "debug", 0, NULL, 'd' },
 		{ "bundle", 0, NULL, 'b' },
 		{ "help", 0, NULL, 'h' },
 		{ "version", 0, NULL, 'v' },
@@ -119,7 +124,6 @@ int main(int argc, char *argv[]) {
 	};
 
 	int opt;
-	const char *run_file = NULL;
 	while ((opt = getopt_long(argc, argv, short_options, long_options, NULL)) != -1) {
 		switch (opt) {
 			case 'r':
@@ -128,6 +132,9 @@ int main(int argc, char *argv[]) {
 			case 'b':
 				printf("TODO: Bundler\n");
 				return 0;
+			case 'd':
+				debug_level = LOG_DEBUG;
+				break;
 			case 'h':
 				help(argv[0]);
 				return 0;
@@ -141,7 +148,7 @@ int main(int argc, char *argv[]) {
 	}
 
 	if (run_file) {
-		SetTraceLogLevel(DEBUG_LEVEL);
+		SetTraceLogLevel(debug_level);
 
 		lua_State *L = luaL_newstate();
 		luaL_openlibs(L);
