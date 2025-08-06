@@ -26,7 +26,7 @@ static int lua_getfield_int_opt(lua_State *L, int index, const char *key, int de
 	return val;
 }
 
-static int load_embedded_module(lua_State *L, const char* module_code, size_t code_len, const char* module_name) {
+static int load_embedded_module(lua_State *L, const char *module_code, size_t code_len, const char *module_name) {
 	if (luaL_loadbuffer(L, module_code, code_len, module_name) || lua_pcall(L, 0, 1, 0)) {
 		fprintf(stderr, "Error loading %s: %s\n", module_name, lua_tostring(L, -1));
 		return 0;
