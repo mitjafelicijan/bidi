@@ -13,7 +13,8 @@ $(LUAC_T)	vendor/lua-5.4.8/src/Makefile	/^$(LUAC_T): $(LUAC_O) $(LUA_A)$/;"	t
 $(LUA_A)	vendor/lua-5.4.8/src/Makefile	/^$(LUA_A): $(BASE_O)$/;"	t
 $(LUA_T)	vendor/lua-5.4.8/src/Makefile	/^$(LUA_T): $(LUA_O) $(LUA_A)$/;"	t
 $(PLATS)	vendor/lua-5.4.8/Makefile	/^$(PLATS) help test clean:$/;"	t
-$(PROG)	Makefile	/^$(PROG): lua *.c$/;"	t
+$(PROG)	Makefile	/^$(PROG): $(PROG_C)$/;"	t
+%.h	Makefile	/^%.h: %.lua$/;"	t
 ABSLINEINFO	vendor/lua-5.4.8/src/ldebug.h	/^#define ABSLINEINFO	/;"	d
 ABSTKEYCONSTANT	vendor/lua-5.4.8/src/lobject.h	/^#define ABSTKEYCONSTANT	/;"	d
 AGEBITS	vendor/lua-5.4.8/src/lgc.h	/^#define AGEBITS	/;"	d
@@ -57,6 +58,7 @@ BLEND_SUBTRACT_COLORS	vendor/raylib-5.5_linux_amd64/include/raylib.h	/^    BLEND
 BLUE	vendor/raylib-5.5_linux_amd64/include/raylib.h	/^#define BLUE /;"	d
 BROWN	vendor/raylib-5.5_linux_amd64/include/raylib.h	/^#define BROWN /;"	d
 BUFVFS	vendor/lua-5.4.8/src/lobject.c	/^#define BUFVFS	/;"	d	file:
+Basic Usage	vendor/microtar-0.1.0/README.md	/^## Basic Usage$/;"	s	chapter:microtar
 BeginBlendMode	vendor/raylib-5.5_linux_amd64/include/raylib.h	/^RLAPI void BeginBlendMode(int mode);                              \/\/ Begin blending mode (alph/;"	p	typeref:typename:RLAPI void
 BeginDrawing	vendor/raylib-5.5_linux_amd64/include/raylib.h	/^RLAPI void BeginDrawing(void);                                    \/\/ Setup canvas (framebuffer/;"	p	typeref:typename:RLAPI void
 BeginMode2D	vendor/raylib-5.5_linux_amd64/include/raylib.h	/^RLAPI void BeginMode2D(Camera2D camera);                          \/\/ Begin 2D mode with custom/;"	p	typeref:typename:RLAPI void
@@ -86,11 +88,11 @@ CAMERA_PERSPECTIVE	vendor/raylib-5.5_linux_amd64/include/raylib.h	/^    CAMERA_P
 CAMERA_THIRD_PERSON	vendor/raylib-5.5_linux_amd64/include/raylib.h	/^    CAMERA_THIRD_PERSON             \/\/ Camera third person$/;"	e	enum:__anon77d6622f1403
 CAP_POSITION	vendor/lua-5.4.8/src/lstrlib.c	/^#define CAP_POSITION	/;"	d	file:
 CAP_UNFINISHED	vendor/lua-5.4.8/src/lstrlib.c	/^#define CAP_UNFINISHED	/;"	d	file:
-CC	Makefile	/^CC      ?= tcc$/;"	m
+CC	Makefile	/^CC           ?= tcc$/;"	m
 CC	vendor/lua-5.4.8/src/Makefile	/^CC= gcc -std=gnu99$/;"	m
 CClosure	vendor/lua-5.4.8/src/lobject.h	/^typedef struct CClosure {$/;"	s
 CClosure	vendor/lua-5.4.8/src/lobject.h	/^} CClosure;$/;"	t	typeref:struct:CClosure
-CFLAGS	Makefile	/^CFLAGS  := -std=c99 -v -g -I.\/vendor\/$(RAYLIB)\/include -I.\/vendor\/$(LUA)\/src$/;"	m
+CFLAGS	Makefile	/^CFLAGS       := -std=c99 -v -g -I.\/vendor\/$(RAYLIB)\/include -I.\/vendor\/$(LUA)\/src$/;"	m
 CFLAGS	vendor/lua-5.4.8/src/Makefile	/^CFLAGS= -O2 -Wall -Wextra -DLUA_COMPAT_5_3 $(SYSCFLAGS) $(MYCFLAGS)$/;"	m
 CIST_C	vendor/lua-5.4.8/src/lstate.h	/^#define CIST_C	/;"	d
 CIST_CLSRET	vendor/lua-5.4.8/src/lstate.h	/^#define CIST_CLSRET	/;"	d
@@ -315,6 +317,7 @@ EndScissorMode	vendor/raylib-5.5_linux_amd64/include/raylib.h	/^RLAPI void EndSc
 EndShaderMode	vendor/raylib-5.5_linux_amd64/include/raylib.h	/^RLAPI void EndShaderMode(void);                                   \/\/ End custom shader drawing/;"	p	typeref:typename:RLAPI void
 EndTextureMode	vendor/raylib-5.5_linux_amd64/include/raylib.h	/^RLAPI void EndTextureMode(void);                                  \/\/ Ends drawing to render te/;"	p	typeref:typename:RLAPI void
 EndVrStereoMode	vendor/raylib-5.5_linux_amd64/include/raylib.h	/^RLAPI void EndVrStereoMode(void);                                 \/\/ End stereo rendering (req/;"	p	typeref:typename:RLAPI void
+Error handling	vendor/microtar-0.1.0/README.md	/^## Error handling$/;"	s	chapter:microtar
 ExportAutomationEventList	vendor/raylib-5.5_linux_amd64/include/raylib.h	/^RLAPI bool ExportAutomationEventList(AutomationEventList list, const char *fileName);   \/\/ Exp/;"	p	typeref:typename:RLAPI bool
 ExportDataAsCode	vendor/raylib-5.5_linux_amd64/include/raylib.h	/^RLAPI bool ExportDataAsCode(const unsigned char *data, int dataSize, const char *fileName); \/\//;"	p	typeref:typename:RLAPI bool
 ExportFontAsCode	vendor/raylib-5.5_linux_amd64/include/raylib.h	/^RLAPI bool ExportFontAsCode(Font font, const char *fileName);                               \/\//;"	p	typeref:typename:RLAPI bool
@@ -876,7 +879,7 @@ L	vendor/lua-5.4.8/src/lundump.c	/^  lua_State *L;$/;"	m	struct:__anon98fd752a01
 L	vendor/lua-5.4.8/src/lzio.h	/^  lua_State *L;			\/* Lua state (for reader) *\/$/;"	m	struct:Zio	typeref:typename:lua_State *
 LClosure	vendor/lua-5.4.8/src/lobject.h	/^typedef struct LClosure {$/;"	s
 LClosure	vendor/lua-5.4.8/src/lobject.h	/^} LClosure;$/;"	t	typeref:struct:LClosure
-LDFLAGS	Makefile	/^LDFLAGS := -L.\/vendor\/$(RAYLIB)\/lib -lraylib -L.\/vendor\/$(LUA)\/src -llua -lm$/;"	m
+LDFLAGS	Makefile	/^LDFLAGS      := -L.\/vendor\/$(RAYLIB)\/lib -lraylib -L.\/vendor\/$(LUA)\/src -llua -lm$/;"	m
 LDFLAGS	vendor/lua-5.4.8/src/Makefile	/^LDFLAGS= $(SYSLDFLAGS) $(MYLDFLAGS)$/;"	m
 LEVELS1	vendor/lua-5.4.8/src/lauxlib.c	/^#define LEVELS1	/;"	d	file:
 LEVELS2	vendor/lua-5.4.8/src/lauxlib.c	/^#define LEVELS2	/;"	d	file:
@@ -906,7 +909,7 @@ LStream	vendor/lua-5.4.8/src/liolib.c	/^typedef luaL_Stream LStream;$/;"	t	typer
 LTfloatint	vendor/lua-5.4.8/src/lvm.c	/^l_sinline int LTfloatint (lua_Number f, lua_Integer i) {$/;"	f	typeref:typename:l_sinline int
 LTintfloat	vendor/lua-5.4.8/src/lvm.c	/^l_sinline int LTintfloat (lua_Integer i, lua_Number f) {$/;"	f	typeref:typename:l_sinline int
 LTnum	vendor/lua-5.4.8/src/lvm.c	/^l_sinline int LTnum (const TValue *l, const TValue *r) {$/;"	f	typeref:typename:l_sinline int
-LUA	Makefile	/^LUA     := lua-5.4.8$/;"	m
+LUA	Makefile	/^LUA          := lua-5.4.8$/;"	m
 LUAC_DATA	vendor/lua-5.4.8/src/lundump.h	/^#define LUAC_DATA	/;"	d
 LUAC_FORMAT	vendor/lua-5.4.8/src/lundump.h	/^#define LUAC_FORMAT	/;"	d
 LUAC_INT	vendor/lua-5.4.8/src/lundump.h	/^#define LUAC_INT	/;"	d
@@ -1175,6 +1178,7 @@ Lerp	vendor/raylib-5.5_linux_amd64/include/raymath.h	/^RMAPI float Lerp(float st
 LexState	vendor/lua-5.4.8/src/llex.h	/^typedef struct LexState {$/;"	s
 LexState	vendor/lua-5.4.8/src/llex.h	/^} LexState;$/;"	t	typeref:struct:LexState
 Libraries	README.md	/^## Libraries$/;"	s	chapter:Bidi - Game development framework
+License	vendor/microtar-0.1.0/README.md	/^## License$/;"	s	chapter:microtar
 Linux	vendor/lua-5.4.8/src/Makefile	/^Linux linux:	linux-noreadline$/;"	t
 LoadAudioStream	vendor/raylib-5.5_linux_amd64/include/raylib.h	/^RLAPI AudioStream LoadAudioStream(unsigned int sampleRate, unsigned int sampleSize, unsigned int/;"	p	typeref:typename:RLAPI AudioStream
 LoadAutomationEventList	vendor/raylib-5.5_linux_amd64/include/raylib.h	/^RLAPI AutomationEventList LoadAutomationEventList(const char *fileName);                \/\/ Loa/;"	p	typeref:typename:RLAPI AutomationEventList
@@ -1291,6 +1295,7 @@ MAX_SIZET	vendor/lua-5.4.8/src/llimits.h	/^#define MAX_SIZET	/;"	d
 MAX_SIZET	vendor/lua-5.4.8/src/lstrlib.c	/^#define MAX_SIZET	/;"	d	file:
 MC	vendor/lua-5.4.8/src/lstrlib.c	/^#define MC	/;"	d	file:
 MEMERRMSG	vendor/lua-5.4.8/src/lstring.h	/^#define MEMERRMSG /;"	d
+MICROTAR_H	vendor/microtar-0.1.0/src/microtar.h	/^#define MICROTAR_H$/;"	d
 MIN	vendor/raylib-5.5_linux_amd64/include/rlgl.h	/^        #define MIN(/;"	d
 MINSIZEARRAY	vendor/lua-5.4.8/src/lmem.c	/^#define MINSIZEARRAY	/;"	d	file:
 MINSTRTABSIZE	vendor/lua-5.4.8/src/llimits.h	/^#define MINSTRTABSIZE	/;"	d
@@ -1317,6 +1322,23 @@ MOUSE_LEFT_BUTTON	vendor/raylib-5.5_linux_amd64/include/raylib.h	/^#define MOUSE
 MOUSE_MIDDLE_BUTTON	vendor/raylib-5.5_linux_amd64/include/raylib.h	/^#define MOUSE_MIDDLE_BUTTON /;"	d
 MOUSE_RIGHT_BUTTON	vendor/raylib-5.5_linux_amd64/include/raylib.h	/^#define MOUSE_RIGHT_BUTTON /;"	d
 MSGInvalid	vendor/lua-5.4.8/src/lutf8lib.c	/^#define MSGInvalid	/;"	d	file:
+MTAR_EBADCHKSUM	vendor/microtar-0.1.0/src/microtar.h	/^  MTAR_EBADCHKSUM   = -6,$/;"	e	enum:__anonc24b2ada0103
+MTAR_EFAILURE	vendor/microtar-0.1.0/src/microtar.h	/^  MTAR_EFAILURE     = -1,$/;"	e	enum:__anonc24b2ada0103
+MTAR_ENOTFOUND	vendor/microtar-0.1.0/src/microtar.h	/^  MTAR_ENOTFOUND    = -8$/;"	e	enum:__anonc24b2ada0103
+MTAR_ENULLRECORD	vendor/microtar-0.1.0/src/microtar.h	/^  MTAR_ENULLRECORD  = -7,$/;"	e	enum:__anonc24b2ada0103
+MTAR_EOPENFAIL	vendor/microtar-0.1.0/src/microtar.h	/^  MTAR_EOPENFAIL    = -2,$/;"	e	enum:__anonc24b2ada0103
+MTAR_EREADFAIL	vendor/microtar-0.1.0/src/microtar.h	/^  MTAR_EREADFAIL    = -3,$/;"	e	enum:__anonc24b2ada0103
+MTAR_ESEEKFAIL	vendor/microtar-0.1.0/src/microtar.h	/^  MTAR_ESEEKFAIL    = -5,$/;"	e	enum:__anonc24b2ada0103
+MTAR_ESUCCESS	vendor/microtar-0.1.0/src/microtar.h	/^  MTAR_ESUCCESS     =  0,$/;"	e	enum:__anonc24b2ada0103
+MTAR_EWRITEFAIL	vendor/microtar-0.1.0/src/microtar.h	/^  MTAR_EWRITEFAIL   = -4,$/;"	e	enum:__anonc24b2ada0103
+MTAR_TBLK	vendor/microtar-0.1.0/src/microtar.h	/^  MTAR_TBLK   = '4',$/;"	e	enum:__anonc24b2ada0203
+MTAR_TCHR	vendor/microtar-0.1.0/src/microtar.h	/^  MTAR_TCHR   = '3',$/;"	e	enum:__anonc24b2ada0203
+MTAR_TDIR	vendor/microtar-0.1.0/src/microtar.h	/^  MTAR_TDIR   = '5',$/;"	e	enum:__anonc24b2ada0203
+MTAR_TFIFO	vendor/microtar-0.1.0/src/microtar.h	/^  MTAR_TFIFO  = '6'$/;"	e	enum:__anonc24b2ada0203
+MTAR_TLNK	vendor/microtar-0.1.0/src/microtar.h	/^  MTAR_TLNK   = '1',$/;"	e	enum:__anonc24b2ada0203
+MTAR_TREG	vendor/microtar-0.1.0/src/microtar.h	/^  MTAR_TREG   = '0',$/;"	e	enum:__anonc24b2ada0203
+MTAR_TSYM	vendor/microtar-0.1.0/src/microtar.h	/^  MTAR_TSYM   = '2',$/;"	e	enum:__anonc24b2ada0203
+MTAR_VERSION	vendor/microtar-0.1.0/src/microtar.h	/^#define MTAR_VERSION /;"	d
 MYCFLAGS	vendor/lua-5.4.8/src/Makefile	/^MYCFLAGS=$/;"	m
 MYLDFLAGS	vendor/lua-5.4.8/src/Makefile	/^MYLDFLAGS=$/;"	m
 MYLIBS	vendor/lua-5.4.8/src/Makefile	/^MYLIBS=$/;"	m
@@ -1564,8 +1586,9 @@ POS_k	vendor/lua-5.4.8/src/lopcodes.h	/^#define POS_k	/;"	d
 POS_sJ	vendor/lua-5.4.8/src/lopcodes.h	/^#define POS_sJ	/;"	d
 PRE	vendor/lua-5.4.8/src/lobject.c	/^#define PRE	/;"	d	file:
 PRINTBIT	vendor/lua-5.4.8/src/lctype.h	/^#define PRINTBIT	/;"	d
-PROG	Makefile	/^PROG    := bidi$/;"	m
+PROG	Makefile	/^PROG         := bidi$/;"	m
 PROGNAME	vendor/lua-5.4.8/src/luac.c	/^#define PROGNAME	/;"	d	file:
+PROG_C	Makefile	/^PROG_C       := main.c$/;"	m
 PURPLE	vendor/raylib-5.5_linux_amd64/include/raylib.h	/^#define PURPLE /;"	d
 PauseAudioStream	vendor/raylib-5.5_linux_amd64/include/raylib.h	/^RLAPI void PauseAudioStream(AudioStream stream);                      \/\/ Pause audio stream$/;"	p	typeref:typename:RLAPI void
 PauseMusicStream	vendor/raylib-5.5_linux_amd64/include/raylib.h	/^RLAPI void PauseMusicStream(Music music);                             \/\/ Pause music playing$/;"	p	typeref:typename:RLAPI void
@@ -1625,7 +1648,7 @@ RAD2DEG	vendor/raylib-5.5_linux_amd64/include/raymath.h	/^    #define RAD2DEG /;
 RAD2DEG	vendor/raylib-5.5_linux_amd64/include/rlgl.h	/^    #define RAD2DEG /;"	d
 RANLIB	vendor/lua-5.4.8/src/Makefile	/^RANLIB= ranlib$/;"	m
 RANLIMIT	vendor/lua-5.4.8/src/ltablib.c	/^#define RANLIMIT	/;"	d	file:
-RAYLIB	Makefile	/^RAYLIB  := raylib-5.5_linux_amd64$/;"	m
+RAYLIB	Makefile	/^RAYLIB       := raylib-5.5_linux_amd64$/;"	m
 RAYLIB_H	vendor/raylib-5.5_linux_amd64/include/raylib.h	/^#define RAYLIB_H$/;"	d
 RAYLIB_VERSION	vendor/raylib-5.5_linux_amd64/include/raylib.h	/^#define RAYLIB_VERSION /;"	d
 RAYLIB_VERSION_MAJOR	vendor/raylib-5.5_linux_amd64/include/raylib.h	/^#define RAYLIB_VERSION_MAJOR /;"	d
@@ -1903,6 +1926,8 @@ Ray	vendor/raylib-5.5_linux_amd64/include/raylib.h	/^typedef struct Ray {$/;"	s
 Ray	vendor/raylib-5.5_linux_amd64/include/raylib.h	/^} Ray;$/;"	t	typeref:struct:Ray
 RayCollision	vendor/raylib-5.5_linux_amd64/include/raylib.h	/^typedef struct RayCollision {$/;"	s
 RayCollision	vendor/raylib-5.5_linux_amd64/include/raylib.h	/^} RayCollision;$/;"	t	typeref:struct:RayCollision
+Reading	vendor/microtar-0.1.0/README.md	/^#### Reading$/;"	t	section:microtar""Basic Usage
+Reading	vendor/microtar-0.1.0/README.md	/^#### Reading$/;"	t	section:microtar""Wrapping a stream
 Rectangle	vendor/raylib-5.5_linux_amd64/include/raylib.h	/^typedef struct Rectangle {$/;"	s
 Rectangle	vendor/raylib-5.5_linux_amd64/include/raylib.h	/^} Rectangle;$/;"	t	typeref:struct:Rectangle
 Remap	vendor/raylib-5.5_linux_amd64/include/raymath.h	/^RMAPI float Remap(float value, float inputStart, float inputEnd, float outputStart, float output/;"	f	typeref:typename:RMAPI float
@@ -1983,6 +2008,7 @@ SPECIALS	vendor/lua-5.4.8/src/lstrlib.c	/^#define SPECIALS	/;"	d	file:
 SParser	vendor/lua-5.4.8/src/ldo.c	/^struct SParser {  \/* data to 'f_parser' *\/$/;"	s	file:
 SRand64	vendor/lua-5.4.8/src/lmathlib.c	/^#define SRand64	/;"	d	file:
 SS	vendor/lua-5.4.8/src/luac.c	/^#define SS(/;"	d	file:
+STDLIB_FILES	Makefile	/^STDLIB_FILES := $(wildcard stdlib\/*.lua)$/;"	m
 STRCACHE_M	vendor/lua-5.4.8/src/llimits.h	/^#define STRCACHE_M	/;"	d
 STRCACHE_N	vendor/lua-5.4.8/src/llimits.h	/^#define STRCACHE_N	/;"	d
 SYSCFLAGS	vendor/lua-5.4.8/src/Makefile	/^SYSCFLAGS=$/;"	m
@@ -2188,6 +2214,7 @@ Texture2D	vendor/raylib-5.5_linux_amd64/include/raylib.h	/^typedef Texture Textu
 TextureCubemap	vendor/raylib-5.5_linux_amd64/include/raylib.h	/^typedef Texture TextureCubemap;$/;"	t	typeref:typename:Texture
 TextureFilter	vendor/raylib-5.5_linux_amd64/include/raylib.h	/^} TextureFilter;$/;"	t	typeref:enum:__anon77d6622f0e03
 TextureWrap	vendor/raylib-5.5_linux_amd64/include/raylib.h	/^} TextureWrap;$/;"	t	typeref:enum:__anon77d6622f0f03
+Tiny framework for developing small video games.	docs/index.html	/^<h1>Tiny framework for developing small video games.<\/h1>$/;"	h
 ToggleBorderlessWindowed	vendor/raylib-5.5_linux_amd64/include/raylib.h	/^RLAPI void ToggleBorderlessWindowed(void);                        \/\/ Toggle window state: bord/;"	p	typeref:typename:RLAPI void
 ToggleFullscreen	vendor/raylib-5.5_linux_amd64/include/raylib.h	/^RLAPI void ToggleFullscreen(void);                                \/\/ Toggle window state: full/;"	p	typeref:typename:RLAPI void
 Token	vendor/lua-5.4.8/src/llex.h	/^typedef struct Token {$/;"	s
@@ -2422,6 +2449,9 @@ WaveCrop	vendor/raylib-5.5_linux_amd64/include/raylib.h	/^RLAPI void WaveCrop(Wa
 WaveFormat	vendor/raylib-5.5_linux_amd64/include/raylib.h	/^RLAPI void WaveFormat(Wave *wave, int sampleRate, int sampleSize, int channels); \/\/ Convert wa/;"	p	typeref:typename:RLAPI void
 WindowShouldClose	vendor/raylib-5.5_linux_amd64/include/raylib.h	/^RLAPI bool WindowShouldClose(void);                               \/\/ Check if application shou/;"	p	typeref:typename:RLAPI bool
 Wrap	vendor/raylib-5.5_linux_amd64/include/raymath.h	/^RMAPI float Wrap(float value, float min, float max)$/;"	f	typeref:typename:RMAPI float
+Wrapping a stream	vendor/microtar-0.1.0/README.md	/^## Wrapping a stream$/;"	s	chapter:microtar
+Writing	vendor/microtar-0.1.0/README.md	/^#### Writing$/;"	t	section:microtar""Basic Usage
+Writing	vendor/microtar-0.1.0/README.md	/^#### Writing$/;"	t	section:microtar""Wrapping a stream
 XDIGITBIT	vendor/lua-5.4.8/src/lctype.h	/^#define XDIGITBIT	/;"	d
 YELLOW	vendor/raylib-5.5_linux_amd64/include/raylib.h	/^#define YELLOW /;"	d
 Z	vendor/lua-5.4.8/src/lundump.c	/^  ZIO *Z;$/;"	m	struct:__anon98fd752a0108	typeref:typename:ZIO *	file:
@@ -2498,9 +2528,14 @@ __anona701f1f70508	vendor/lua-5.4.8/src/lstate.h	/^    struct {  \/* info about 
 __anonae5a27210108	vendor/lua-5.4.8/src/lstrlib.c	/^  struct {$/;"	s	struct:MatchState	file:
 __anonae5a2721020a	vendor/lua-5.4.8/src/lstrlib.c	/^static const union {$/;"	u	file:
 __anonae5a2721030a	vendor/lua-5.4.8/src/lstrlib.c	/^  struct cD { char c; union { LUAI_MAXALIGN; } u; };$/;"	u	struct:getoption::cD	file:
+__anonc24b2ad50108	vendor/microtar-0.1.0/src/microtar.c	/^typedef struct {$/;"	s	file:
+__anonc24b2ada0103	vendor/microtar-0.1.0/src/microtar.h	/^enum {$/;"	g
+__anonc24b2ada0203	vendor/microtar-0.1.0/src/microtar.h	/^enum {$/;"	g
+__anonc24b2ada0308	vendor/microtar-0.1.0/src/microtar.h	/^typedef struct {$/;"	s
 __anonc6ac66720108	vendor/lua-5.4.8/src/lmathlib.c	/^typedef struct {$/;"	s	file:
 __anonfc1a02ff010a	vendor/lua-5.4.8/src/llex.h	/^typedef union {$/;"	u
 __declspec	vendor/raylib-5.5_linux_amd64/include/raylib.h	/^        #define __declspec(/;"	d
+_padding	vendor/microtar-0.1.0/src/microtar.c	/^  char _padding[255];$/;"	m	struct:__anonc24b2ad50108	typeref:typename:char[255]	file:
 a	vendor/lua-5.4.8/src/Makefile	/^a:	$(ALL_A)$/;"	t
 a	vendor/raylib-5.5_linux_amd64/include/raylib.h	/^    unsigned char a;        \/\/ Color alpha value$/;"	m	struct:Color	typeref:typename:unsigned char
 absentkey	vendor/lua-5.4.8/src/ltable.c	/^static const TValue absentkey = {ABSTKEYCONSTANT};$/;"	v	typeref:typename:const TValue	file:
@@ -2529,6 +2564,7 @@ adjustresults	vendor/lua-5.4.8/src/lapi.h	/^#define adjustresults(/;"	d
 advanceX	vendor/raylib-5.5_linux_amd64/include/raylib.h	/^    int advanceX;           \/\/ Character advance position X$/;"	m	struct:GlyphInfo	typeref:typename:int
 aix	vendor/lua-5.4.8/src/Makefile	/^AIX aix:$/;"	t
 alimit	vendor/lua-5.4.8/src/lobject.h	/^  unsigned int alimit;  \/* "limit" of 'array' array *\/$/;"	m	struct:Table	typeref:typename:unsigned int
+all	Makefile	/^all: lua hexdump $(STDLIB_FILES:.lua=.h) $(PROG)$/;"	t
 all	vendor/lua-5.4.8/Makefile	/^all:	$(PLAT)$/;"	t
 all	vendor/lua-5.4.8/src/Makefile	/^all:	$(ALL_T)$/;"	t
 allgc	vendor/lua-5.4.8/src/lstate.h	/^  GCObject *allgc;  \/* list of all collectable objects *\/$/;"	m	struct:global_State	typeref:typename:GCObject *
@@ -2690,6 +2726,8 @@ checkstack	vendor/lua-5.4.8/src/ldblib.c	/^static void checkstack (lua_State *L,
 checkstackGC	vendor/lua-5.4.8/src/ldo.h	/^#define checkstackGC(/;"	d
 checkstackGCp	vendor/lua-5.4.8/src/ldo.h	/^#define checkstackGCp(/;"	d
 checkstackp	vendor/lua-5.4.8/src/ldo.h	/^#define checkstackp(/;"	d
+checksum	vendor/microtar-0.1.0/src/microtar.c	/^  char checksum[8];$/;"	m	struct:__anonc24b2ad50108	typeref:typename:char[8]	file:
+checksum	vendor/microtar-0.1.0/src/microtar.c	/^static unsigned checksum(const mtar_raw_header_t* rh) {$/;"	f	typeref:typename:unsigned	file:
 checktab	vendor/lua-5.4.8/src/ltablib.c	/^static void checktab (lua_State *L, int arg, int what) {$/;"	f	typeref:typename:void	file:
 checktag	vendor/lua-5.4.8/src/lobject.h	/^#define checktag(/;"	d
 checktoclose	vendor/lua-5.4.8/src/lparser.c	/^static void checktoclose (FuncState *fs, int level) {$/;"	f	typeref:typename:void	file:
@@ -2714,6 +2752,7 @@ clearbyvalues	vendor/lua-5.4.8/src/lgc.c	/^static void clearbyvalues (global_Sta
 cleargraylists	vendor/lua-5.4.8/src/lgc.c	/^static void cleargraylists (global_State *g) {$/;"	f	typeref:typename:void	file:
 clearkey	vendor/lua-5.4.8/src/lgc.c	/^static void clearkey (Node *n) {$/;"	f	typeref:typename:void	file:
 close	vendor/lua-5.4.8/src/lparser.h	/^  lu_byte close;  \/* goto that escapes upvalues *\/$/;"	m	struct:Labeldesc	typeref:typename:lu_byte
+close	vendor/microtar-0.1.0/src/microtar.h	/^  int (*close)(mtar_t *tar);$/;"	m	struct:mtar_t	typeref:typename:int (*)(mtar_t * tar)
 close_func	vendor/lua-5.4.8/src/lparser.c	/^static void close_func (LexState *ls) {$/;"	f	typeref:typename:void	file:
 close_state	vendor/lua-5.4.8/src/lstate.c	/^static void close_state (lua_State *L) {$/;"	f	typeref:typename:void	file:
 closef	vendor/lua-5.4.8/src/lauxlib.h	/^  lua_CFunction closef;  \/* to close stream (NULL for closed streams) *\/$/;"	m	struct:luaL_Stream	typeref:typename:lua_CFunction
@@ -2741,13 +2780,17 @@ codename	vendor/lua-5.4.8/src/lparser.c	/^static void codename (LexState *ls, ex
 codenot	vendor/lua-5.4.8/src/lcode.c	/^static void codenot (FuncState *fs, expdesc *e) {$/;"	f	typeref:typename:void	file:
 codeorder	vendor/lua-5.4.8/src/lcode.c	/^static void codeorder (FuncState *fs, BinOpr opr, expdesc *e1, expdesc *e2) {$/;"	f	typeref:typename:void	file:
 codepoint	vendor/lua-5.4.8/src/lutf8lib.c	/^static int codepoint (lua_State *L) {$/;"	f	typeref:typename:int	file:
+codepoint_to_utf8	stdlib/json.lua	/^local function codepoint_to_utf8(n)$/;"	f
 codesJ	vendor/lua-5.4.8/src/lcode.c	/^static int codesJ (FuncState *fs, OpCode o, int sj, int k) {$/;"	f	typeref:typename:int	file:
 codesJ	vendor/lua-5.4.8/src/lcode.c	/^static int codesJ (FuncState *fs, OpCode o, int sj, int k);$/;"	p	typeref:typename:int	file:
 codestring	vendor/lua-5.4.8/src/lparser.c	/^static void codestring (expdesc *e, TString *s) {$/;"	f	typeref:typename:void	file:
 codeunexpval	vendor/lua-5.4.8/src/lcode.c	/^static void codeunexpval (FuncState *fs, OpCode op, expdesc *e, int line) {$/;"	f	typeref:typename:void	file:
 collectargs	vendor/lua-5.4.8/src/lua.c	/^static int collectargs (char **argv, int *first) {$/;"	f	typeref:typename:int	file:
 collectvalidlines	vendor/lua-5.4.8/src/ldebug.c	/^static void collectvalidlines (lua_State *L, Closure *f) {$/;"	f	typeref:typename:void	file:
+color	stdlib/color.h	/^unsigned char color[] = {$/;"	v	typeref:typename:unsigned char[]
 color	vendor/raylib-5.5_linux_amd64/include/raylib.h	/^    Color color;            \/\/ Material map color$/;"	m	struct:MaterialMap	typeref:typename:Color
+color_H	stdlib/color.h	/^#define color_H$/;"	d
+color_len	stdlib/color.h	/^unsigned int color_len = 1540;$/;"	v	typeref:typename:unsigned int
 colora	vendor/raylib-5.5_linux_amd64/include/rlgl.h	/^        unsigned char colorr, colorg, colorb, colora;   \/\/ Current active color (added on glVe/;"	m	struct:rlglData::__anon1f68b8bd0d08	typeref:typename:unsigned char
 colorb	vendor/raylib-5.5_linux_amd64/include/rlgl.h	/^        unsigned char colorr, colorg, colorb, colora;   \/\/ Current active color (added on glVe/;"	m	struct:rlglData::__anon1f68b8bd0d08	typeref:typename:unsigned char
 colorg	vendor/raylib-5.5_linux_amd64/include/rlgl.h	/^        unsigned char colorr, colorg, colorb, colora;   \/\/ Current active color (added on glVe/;"	m	struct:rlglData::__anon1f68b8bd0d08	typeref:typename:unsigned char
@@ -2779,6 +2822,7 @@ correctstack	vendor/lua-5.4.8/src/ldo.c	/^static void correctstack (lua_State *L
 count	vendor/raylib-5.5_linux_amd64/include/raylib.h	/^    unsigned int count;             \/\/ Events entries count$/;"	m	struct:AutomationEventList	typeref:typename:unsigned int
 count	vendor/raylib-5.5_linux_amd64/include/raylib.h	/^    unsigned int count;             \/\/ Filepaths entries count$/;"	m	struct:FilePathList	typeref:typename:unsigned int
 countint	vendor/lua-5.4.8/src/ltable.c	/^static int countint (lua_Integer key, unsigned int *nums) {$/;"	f	typeref:typename:int	file:
+create_set	stdlib/json.lua	/^local function create_set(...)$/;"	f
 createargtable	vendor/lua-5.4.8/src/lua.c	/^static void createargtable (lua_State *L, char **argv, int argc, int script) {$/;"	f	typeref:typename:void	file:
 createclibstable	vendor/lua-5.4.8/src/loadlib.c	/^static void createclibstable (lua_State *L) {$/;"	f	typeref:typename:void	file:
 createlabel	vendor/lua-5.4.8/src/lparser.c	/^static int createlabel (LexState *ls, TString *name, int line,$/;"	f	typeref:typename:int	file:
@@ -2829,7 +2873,9 @@ db_upvalueid	vendor/lua-5.4.8/src/ldblib.c	/^static int db_upvalueid (lua_State 
 db_upvaluejoin	vendor/lua-5.4.8/src/ldblib.c	/^static int db_upvaluejoin (lua_State *L) {$/;"	f	typeref:typename:int	file:
 dblib	vendor/lua-5.4.8/src/ldblib.c	/^static const luaL_Reg dblib[] = {$/;"	v	typeref:typename:const luaL_Reg[]	file:
 decnny	vendor/lua-5.4.8/src/lstate.h	/^#define decnny(/;"	d
+decode	stdlib/json.lua	/^function json.decode(str)$/;"	f	unknown:json
 decodeNresults	vendor/lua-5.4.8/src/lapi.h	/^#define decodeNresults(/;"	d
+decode_error	stdlib/json.lua	/^local function decode_error(str, idx, msg)$/;"	f
 default	vendor/lua-5.4.8/src/Makefile	/^default: $(PLAT)$/;"	t
 defaultBatch	vendor/raylib-5.5_linux_amd64/include/rlgl.h	/^    rlRenderBatch defaultBatch;             \/\/ Default internal render batch$/;"	m	struct:rlglData	typeref:typename:rlRenderBatch
 defaultFShaderId	vendor/raylib-5.5_linux_amd64/include/rlgl.h	/^        unsigned int defaultFShaderId;      \/\/ Default fragment shader id (used by default sha/;"	m	struct:rlglData::__anon1f68b8bd0d08	typeref:typename:unsigned int
@@ -2889,6 +2935,12 @@ dyd	vendor/lua-5.4.8/src/llex.h	/^  struct Dyndata *dyd;  \/* dynamic structures
 echo	vendor/lua-5.4.8/Makefile	/^echo:$/;"	t
 echo	vendor/lua-5.4.8/src/Makefile	/^echo:$/;"	t
 elementCount	vendor/raylib-5.5_linux_amd64/include/rlgl.h	/^    int elementCount;           \/\/ Number of elements in the buffer (QUADS)$/;"	m	struct:rlVertexBuffer	typeref:typename:int
+encode	stdlib/json.lua	/^encode = function(val, stack)$/;"	f
+encode	stdlib/json.lua	/^function json.encode(val)$/;"	f	unknown:json
+encode_nil	stdlib/json.lua	/^local function encode_nil(val)$/;"	f
+encode_number	stdlib/json.lua	/^local function encode_number(val)$/;"	f
+encode_string	stdlib/json.lua	/^local function encode_string(val)$/;"	f
+encode_table	stdlib/json.lua	/^local function encode_table(val, stack)$/;"	f
 end_capture	vendor/lua-5.4.8/src/lstrlib.c	/^static const char *end_capture (MatchState *ms, const char *s,$/;"	f	typeref:typename:const char *	file:
 endpc	vendor/lua-5.4.8/src/lobject.h	/^  int endpc;    \/* first point where variable is dead *\/$/;"	m	struct:LocVar	typeref:typename:int
 enterblock	vendor/lua-5.4.8/src/lparser.c	/^static void enterblock (FuncState *fs, BlockCnt *bl, lu_byte isloop) {$/;"	f	typeref:typename:void	file:
@@ -2909,6 +2961,7 @@ errorJmp	vendor/lua-5.4.8/src/lstate.h	/^  struct lua_longjmp *errorJmp;  \/* cu
 error_expected	vendor/lua-5.4.8/src/lparser.c	/^static l_noret error_expected (LexState *ls, int token) {$/;"	f	typeref:typename:l_noret	file:
 errorlimit	vendor/lua-5.4.8/src/lparser.c	/^static l_noret errorlimit (FuncState *fs, int limit, const char *what) {$/;"	f	typeref:typename:l_noret	file:
 errorstatus	vendor/lua-5.4.8/src/ldo.c	/^#define errorstatus(/;"	d	file:
+escape_char	stdlib/json.lua	/^local function escape_char(c)$/;"	f
 esccheck	vendor/lua-5.4.8/src/llex.c	/^static void esccheck (LexState *ls, int c, const char *msg) {$/;"	f	typeref:typename:void	file:
 event	vendor/lua-5.4.8/src/lua.h	/^  int event;$/;"	m	struct:lua_Debug	typeref:typename:int
 eventname	vendor/lua-5.4.8/src/luac.c	/^#define eventname(/;"	d	file:
@@ -2952,6 +3005,10 @@ fchecksize	vendor/lua-5.4.8/src/lundump.c	/^static void fchecksize (LoadState *S
 features	vendor/raylib-5.5_linux_amd64/README.md	/^features$/;"	s
 field	vendor/lua-5.4.8/src/lparser.c	/^static void field (LexState *ls, ConsControl *cc) {$/;"	f	typeref:typename:void	file:
 fieldsel	vendor/lua-5.4.8/src/lparser.c	/^static void fieldsel (LexState *ls, expdesc *v) {$/;"	f	typeref:typename:void	file:
+file_close	vendor/microtar-0.1.0/src/microtar.c	/^static int file_close(mtar_t *tar) {$/;"	f	typeref:typename:int	file:
+file_read	vendor/microtar-0.1.0/src/microtar.c	/^static int file_read(mtar_t *tar, void *data, unsigned size) {$/;"	f	typeref:typename:int	file:
+file_seek	vendor/microtar-0.1.0/src/microtar.c	/^static int file_seek(mtar_t *tar, unsigned offset) {$/;"	f	typeref:typename:int	file:
+file_write	vendor/microtar-0.1.0/src/microtar.c	/^static int file_write(mtar_t *tar, const void *data, unsigned size) {$/;"	f	typeref:typename:int	file:
 filterpc	vendor/lua-5.4.8/src/ldebug.c	/^static int filterpc (int pc, int jmptarget) {$/;"	f	typeref:typename:int	file:
 finaltarget	vendor/lua-5.4.8/src/lcode.c	/^static int finaltarget (Instruction *code, int i) {$/;"	f	typeref:typename:int	file:
 findfield	vendor/lua-5.4.8/src/lauxlib.c	/^static int findfield (lua_State *L, int objidx, int level) {$/;"	f	typeref:typename:int	file:
@@ -3170,6 +3227,7 @@ gnodelast	vendor/lua-5.4.8/src/lgc.c	/^#define gnodelast(/;"	d	file:
 gotostat	vendor/lua-5.4.8/src/lparser.c	/^static void gotostat (LexState *ls) {$/;"	f	typeref:typename:void	file:
 gray	vendor/lua-5.4.8/src/lstate.h	/^  GCObject *gray;  \/* list of gray objects *\/$/;"	m	struct:global_State	typeref:typename:GCObject *
 grayagain	vendor/lua-5.4.8/src/lstate.h	/^  GCObject *grayagain;  \/* list of objects to be traversed atomically *\/$/;"	m	struct:global_State	typeref:typename:GCObject *
+group	vendor/microtar-0.1.0/src/microtar.c	/^  char group[8];$/;"	m	struct:__anonc24b2ad50108	typeref:typename:char[8]	file:
 growstrtab	vendor/lua-5.4.8/src/lstring.c	/^static void growstrtab (lua_State *L, stringtable *tb) {$/;"	f	typeref:typename:void	file:
 gt	vendor/lua-5.4.8/src/lparser.h	/^  Labellist gt;  \/* list of pending gotos *\/$/;"	m	struct:Dyndata	typeref:typename:Labellist
 guess	vendor/lua-5.4.8/src/Makefile	/^guess:$/;"	t
@@ -3199,11 +3257,13 @@ hashstr	vendor/lua-5.4.8/src/ltable.c	/^#define hashstr(/;"	d	file:
 hasjumps	vendor/lua-5.4.8/src/lcode.c	/^#define hasjumps(/;"	d	file:
 hasmultret	vendor/lua-5.4.8/src/lparser.c	/^#define hasmultret(/;"	d	file:
 hastocloseCfunc	vendor/lua-5.4.8/src/lapi.h	/^#define hastocloseCfunc(/;"	d
+header_to_raw	vendor/microtar-0.1.0/src/microtar.c	/^static int header_to_raw(mtar_raw_header_t *rh, const mtar_header_t *h) {$/;"	f	typeref:typename:int	file:
 height	vendor/raylib-5.5_linux_amd64/include/raylib.h	/^    float height;           \/\/ Rectangle height$/;"	m	struct:Rectangle	typeref:typename:float
 height	vendor/raylib-5.5_linux_amd64/include/raylib.h	/^    int height;             \/\/ Image base height$/;"	m	struct:Image	typeref:typename:int
 height	vendor/raylib-5.5_linux_amd64/include/raylib.h	/^    int height;             \/\/ Texture base height$/;"	m	struct:Texture	typeref:typename:int
 help	vendor/lua-5.4.8/Makefile	/^$(PLATS) help test clean:$/;"	t
 help	vendor/lua-5.4.8/src/Makefile	/^help:$/;"	t
+hexdump	Makefile	/^hexdump: hexdump.c$/;"	t
 hit	vendor/raylib-5.5_linux_amd64/include/raylib.h	/^    bool hit;               \/\/ Did the ray hit something?$/;"	m	struct:RayCollision	typeref:typename:bool
 hnext	vendor/lua-5.4.8/src/lobject.h	/^    struct TString *hnext;  \/* linked list for hash table *\/$/;"	m	union:TString::__anon808f9fcd030a	typeref:struct:TString *
 hook	vendor/lua-5.4.8/src/lstate.h	/^  volatile lua_Hook hook;$/;"	m	struct:lua_State	typeref:typename:volatile lua_Hook
@@ -3327,6 +3387,9 @@ ival	vendor/lua-5.4.8/src/lparser.h	/^    lua_Integer ival;    \/* for VKINT *\/
 ivalue	vendor/lua-5.4.8/src/lobject.h	/^#define ivalue(/;"	d
 ivalueraw	vendor/lua-5.4.8/src/lobject.h	/^#define ivalueraw(/;"	d
 iwthabs	vendor/lua-5.4.8/src/lparser.h	/^  lu_byte iwthabs;  \/* instructions issued since last absolute line info *\/$/;"	m	struct:FuncState	typeref:typename:lu_byte
+json	stdlib/json.h	/^unsigned char json[] = {$/;"	v	typeref:typename:unsigned char[]
+json_H	stdlib/json.h	/^#define json_H$/;"	d
+json_len	stdlib/json.h	/^unsigned int json_len = 9638;$/;"	v	typeref:typename:unsigned int
 jumponcond	vendor/lua-5.4.8/src/lcode.c	/^static int jumponcond (FuncState *fs, expdesc *e, int cond) {$/;"	f	typeref:typename:int	file:
 jumpscopeerror	vendor/lua-5.4.8/src/lparser.c	/^static l_noret jumpscopeerror (LexState *ls, Labeldesc *gt) {$/;"	f	typeref:typename:l_noret	file:
 k	vendor/lua-5.4.8/src/lobject.h	/^  TValue *k;  \/* constants used by the function *\/$/;"	m	struct:Proto	typeref:typename:TValue *
@@ -3423,13 +3486,14 @@ l_uint32	vendor/lua-5.4.8/src/llimits.h	/^typedef unsigned int l_uint32;$/;"	t	t
 l_uint32	vendor/lua-5.4.8/src/llimits.h	/^typedef unsigned long l_uint32;$/;"	t	typeref:typename:unsigned long
 l_unlikely	vendor/lua-5.4.8/src/luaconf.h	/^#define l_unlikely(/;"	d
 l_unlockfile	vendor/lua-5.4.8/src/liolib.c	/^#define l_unlockfile(/;"	d	file:
-l_window_should_close	main.c	/^static int l_window_should_close(lua_State *L) {$/;"	f	typeref:typename:int	file:
+l_window_running	main.c	/^static int l_window_running(lua_State *L) {$/;"	f	typeref:typename:int	file:
 label	vendor/lua-5.4.8/src/lparser.h	/^  Labellist label;   \/* list of active labels *\/$/;"	m	struct:Dyndata	typeref:typename:Labellist
 labelstat	vendor/lua-5.4.8/src/lparser.c	/^static void labelstat (LexState *ls, TString *name, int line) {$/;"	f	typeref:typename:void	file:
 laction	vendor/lua-5.4.8/src/lua.c	/^static void laction (int i) {$/;"	f	typeref:typename:void	file:
 lapi.o	vendor/lua-5.4.8/src/Makefile	/^lapi.o: lapi.c lprefix.h lua.h luaconf.h lapi.h llimits.h lstate.h \\$/;"	t
 lapi_c	vendor/lua-5.4.8/src/lapi.c	/^#define lapi_c$/;"	d	file:
 lapi_h	vendor/lua-5.4.8/src/lapi.h	/^#define lapi_h$/;"	d
+last_header	vendor/microtar-0.1.0/src/microtar.h	/^  unsigned last_header;$/;"	m	struct:mtar_t	typeref:typename:unsigned
 lastatomic	vendor/lua-5.4.8/src/lstate.h	/^  lu_mem lastatomic;  \/* see function 'genstep' in file 'lgc.c' *\/$/;"	m	struct:global_State	typeref:typename:lu_mem
 lastfree	vendor/lua-5.4.8/src/lobject.h	/^  Node *lastfree;  \/* any free position is before this position *\/$/;"	m	struct:Table	typeref:typename:Node *
 lastlevel	vendor/lua-5.4.8/src/lauxlib.c	/^static int lastlevel (lua_State *L) {$/;"	f	typeref:typename:int	file:
@@ -3501,6 +3565,8 @@ linit.o	vendor/lua-5.4.8/src/Makefile	/^linit.o: linit.c lprefix.h lua.h luaconf
 linit_c	vendor/lua-5.4.8/src/linit.c	/^#define linit_c$/;"	d	file:
 linkgclist	vendor/lua-5.4.8/src/lgc.c	/^#define linkgclist(/;"	d	file:
 linkgclist_	vendor/lua-5.4.8/src/lgc.c	/^static void linkgclist_ (GCObject *o, GCObject **pnext, GCObject **list) {$/;"	f	typeref:typename:void	file:
+linkname	vendor/microtar-0.1.0/src/microtar.c	/^  char linkname[100];$/;"	m	struct:__anonc24b2ad50108	typeref:typename:char[100]	file:
+linkname	vendor/microtar-0.1.0/src/microtar.h	/^  char linkname[100];$/;"	m	struct:__anonc24b2ada0308	typeref:typename:char[100]
 linkobjgclist	vendor/lua-5.4.8/src/lgc.c	/^#define linkobjgclist(/;"	d	file:
 linux	vendor/lua-5.4.8/src/Makefile	/^Linux linux:	linux-noreadline$/;"	t
 linux-noreadline	vendor/lua-5.4.8/src/Makefile	/^linux-noreadline:$/;"	t
@@ -4257,6 +4323,8 @@ lua_getallocf	vendor/lua-5.4.8/src/lapi.c	/^LUA_API lua_Alloc lua_getallocf (lua
 lua_getextraspace	vendor/lua-5.4.8/src/lua.h	/^#define lua_getextraspace(/;"	d
 lua_getfield	vendor/lua-5.4.8/src/lapi.c	/^LUA_API int lua_getfield (lua_State *L, int idx, const char *k) {$/;"	f	typeref:typename:LUA_API int
 lua_getfield	vendor/lua-5.4.8/src/lua.h	/^LUA_API int (lua_getfield) (lua_State *L, int idx, const char *k);$/;"	v	typeref:typename:LUA_API int ()(lua_State * L,int idx,const char * k)
+lua_getfield_int	main.c	/^static int lua_getfield_int(lua_State *L, int index, const char *key) {$/;"	f	typeref:typename:int	file:
+lua_getfield_int_opt	main.c	/^static int lua_getfield_int_opt(lua_State *L, int index, const char *key, int def) {$/;"	f	typeref:typename:int	file:
 lua_getglobal	vendor/lua-5.4.8/src/lapi.c	/^LUA_API int lua_getglobal (lua_State *L, const char *name) {$/;"	f	typeref:typename:LUA_API int
 lua_getglobal	vendor/lua-5.4.8/src/lua.h	/^LUA_API int (lua_getglobal) (lua_State *L, const char *name);$/;"	v	typeref:typename:LUA_API int ()(lua_State * L,const char * name)
 lua_gethook	vendor/lua-5.4.8/src/ldebug.c	/^LUA_API lua_Hook lua_gethook (lua_State *L) {$/;"	f	typeref:typename:LUA_API lua_Hook
@@ -4582,6 +4650,7 @@ m9	vendor/raylib-5.5_linux_amd64/include/raymath.h	/^    float m1, m5, m9, m13; 
 m9	vendor/raylib-5.5_linux_amd64/include/rlgl.h	/^    float m1, m5, m9, m13;      \/\/ Matrix second row (4 components)$/;"	m	struct:Matrix	typeref:typename:float
 macos	vendor/lua-5.4.8/src/Makefile	/^Darwin macos macosx:$/;"	t
 macosx	vendor/lua-5.4.8/src/Makefile	/^Darwin macos macosx:$/;"	t
+main	hexdump.c	/^int main(int argc, char *argv[]) {$/;"	f	typeref:typename:int
 main	main.c	/^int main(void) {$/;"	f	typeref:typename:int
 main	vendor/lua-5.4.8/src/lua.c	/^int main (int argc, char **argv) {$/;"	f	typeref:typename:int
 main	vendor/lua-5.4.8/src/luac.c	/^int main(int argc, char* argv[])$/;"	f	typeref:typename:int
@@ -4661,12 +4730,15 @@ metatable	vendor/lua-5.4.8/src/lobject.h	/^  struct Table *metatable;$/;"	m	stru
 metatable	vendor/lua-5.4.8/src/lobject.h	/^  struct Table *metatable;$/;"	m	struct:Udata	typeref:struct:Table *
 metatable	vendor/lua-5.4.8/src/lobject.h	/^  struct Table *metatable;$/;"	m	struct:Udata0	typeref:struct:Table *
 meth	vendor/lua-5.4.8/src/liolib.c	/^static const luaL_Reg meth[] = {$/;"	v	typeref:typename:const luaL_Reg[]	file:
+microtar	vendor/microtar-0.1.0/README.md	/^# microtar$/;"	c
 min	vendor/raylib-5.5_linux_amd64/include/raylib.h	/^    Vector3 min;            \/\/ Minimum vertex box-corner$/;"	m	struct:BoundingBox	typeref:typename:Vector3
 min_expand	vendor/lua-5.4.8/src/lstrlib.c	/^static const char *min_expand (MatchState *ms, const char *s,$/;"	f	typeref:typename:const char *	file:
 mingw	vendor/lua-5.4.8/src/Makefile	/^mingw:$/;"	t
 mipmaps	vendor/raylib-5.5_linux_amd64/include/raylib.h	/^    int mipmaps;            \/\/ Mipmap levels, 1 by default$/;"	m	struct:Image	typeref:typename:int
 mipmaps	vendor/raylib-5.5_linux_amd64/include/raylib.h	/^    int mipmaps;            \/\/ Mipmap levels, 1 by default$/;"	m	struct:Texture	typeref:typename:int
 mode	vendor/lua-5.4.8/src/ldo.c	/^  const char *mode;$/;"	m	struct:SParser	typeref:typename:const char *	file:
+mode	vendor/microtar-0.1.0/src/microtar.c	/^  char mode[8];$/;"	m	struct:__anonc24b2ad50108	typeref:typename:char[8]	file:
+mode	vendor/microtar-0.1.0/src/microtar.h	/^  unsigned mode;$/;"	m	struct:__anonc24b2ada0308	typeref:typename:unsigned
 mode	vendor/raylib-5.5_linux_amd64/include/rlgl.h	/^    int mode;                   \/\/ Drawing mode: LINES, TRIANGLES, QUADS$/;"	m	struct:rlDrawCall	typeref:typename:int
 modelview	vendor/raylib-5.5_linux_amd64/include/rlgl.h	/^        Matrix modelview;                   \/\/ Default modelview matrix$/;"	m	struct:rlglData::__anon1f68b8bd0d08	typeref:typename:Matrix
 movegotosout	vendor/lua-5.4.8/src/lparser.c	/^static void movegotosout (FuncState *fs, BlockCnt *bl) {$/;"	f	typeref:typename:void	file:
@@ -4674,6 +4746,40 @@ moveresults	vendor/lua-5.4.8/src/ldo.c	/^l_sinline void moveresults (lua_State *
 ms	vendor/lua-5.4.8/src/lstrlib.c	/^  MatchState ms;  \/* match state *\/$/;"	m	struct:GMatchState	typeref:typename:MatchState	file:
 msghandler	vendor/lua-5.4.8/src/lua.c	/^static int msghandler (lua_State *L) {$/;"	f	typeref:typename:int	file:
 mt	vendor/lua-5.4.8/src/lstate.h	/^  struct Table *mt[LUA_NUMTYPES];  \/* metatables for basic types *\/$/;"	m	struct:global_State	typeref:struct:Table * []
+mtar_close	vendor/microtar-0.1.0/src/microtar.c	/^int mtar_close(mtar_t *tar) {$/;"	f	typeref:typename:int
+mtar_close	vendor/microtar-0.1.0/src/microtar.h	/^int mtar_close(mtar_t *tar);$/;"	p	typeref:typename:int
+mtar_finalize	vendor/microtar-0.1.0/src/microtar.c	/^int mtar_finalize(mtar_t *tar) {$/;"	f	typeref:typename:int
+mtar_finalize	vendor/microtar-0.1.0/src/microtar.h	/^int mtar_finalize(mtar_t *tar);$/;"	p	typeref:typename:int
+mtar_find	vendor/microtar-0.1.0/src/microtar.c	/^int mtar_find(mtar_t *tar, const char *name, mtar_header_t *h) {$/;"	f	typeref:typename:int
+mtar_find	vendor/microtar-0.1.0/src/microtar.h	/^int mtar_find(mtar_t *tar, const char *name, mtar_header_t *h);$/;"	p	typeref:typename:int
+mtar_header_t	vendor/microtar-0.1.0/src/microtar.h	/^} mtar_header_t;$/;"	t	typeref:struct:__anonc24b2ada0308
+mtar_next	vendor/microtar-0.1.0/src/microtar.c	/^int mtar_next(mtar_t *tar) {$/;"	f	typeref:typename:int
+mtar_next	vendor/microtar-0.1.0/src/microtar.h	/^int mtar_next(mtar_t *tar);$/;"	p	typeref:typename:int
+mtar_open	vendor/microtar-0.1.0/src/microtar.c	/^int mtar_open(mtar_t *tar, const char *filename, const char *mode) {$/;"	f	typeref:typename:int
+mtar_open	vendor/microtar-0.1.0/src/microtar.h	/^int mtar_open(mtar_t *tar, const char *filename, const char *mode);$/;"	p	typeref:typename:int
+mtar_raw_header_t	vendor/microtar-0.1.0/src/microtar.c	/^} mtar_raw_header_t;$/;"	t	typeref:struct:__anonc24b2ad50108	file:
+mtar_read_data	vendor/microtar-0.1.0/src/microtar.c	/^int mtar_read_data(mtar_t *tar, void *ptr, unsigned size) {$/;"	f	typeref:typename:int
+mtar_read_data	vendor/microtar-0.1.0/src/microtar.h	/^int mtar_read_data(mtar_t *tar, void *ptr, unsigned size);$/;"	p	typeref:typename:int
+mtar_read_header	vendor/microtar-0.1.0/src/microtar.c	/^int mtar_read_header(mtar_t *tar, mtar_header_t *h) {$/;"	f	typeref:typename:int
+mtar_read_header	vendor/microtar-0.1.0/src/microtar.h	/^int mtar_read_header(mtar_t *tar, mtar_header_t *h);$/;"	p	typeref:typename:int
+mtar_rewind	vendor/microtar-0.1.0/src/microtar.c	/^int mtar_rewind(mtar_t *tar) {$/;"	f	typeref:typename:int
+mtar_rewind	vendor/microtar-0.1.0/src/microtar.h	/^int mtar_rewind(mtar_t *tar);$/;"	p	typeref:typename:int
+mtar_seek	vendor/microtar-0.1.0/src/microtar.c	/^int mtar_seek(mtar_t *tar, unsigned pos) {$/;"	f	typeref:typename:int
+mtar_seek	vendor/microtar-0.1.0/src/microtar.h	/^int mtar_seek(mtar_t *tar, unsigned pos);$/;"	p	typeref:typename:int
+mtar_strerror	vendor/microtar-0.1.0/src/microtar.c	/^const char* mtar_strerror(int err) {$/;"	f	typeref:typename:const char *
+mtar_strerror	vendor/microtar-0.1.0/src/microtar.h	/^const char* mtar_strerror(int err);$/;"	p	typeref:typename:const char *
+mtar_t	vendor/microtar-0.1.0/src/microtar.h	/^struct mtar_t {$/;"	s
+mtar_t	vendor/microtar-0.1.0/src/microtar.h	/^typedef struct mtar_t mtar_t;$/;"	t	typeref:struct:mtar_t
+mtar_write_data	vendor/microtar-0.1.0/src/microtar.c	/^int mtar_write_data(mtar_t *tar, const void *data, unsigned size) {$/;"	f	typeref:typename:int
+mtar_write_data	vendor/microtar-0.1.0/src/microtar.h	/^int mtar_write_data(mtar_t *tar, const void *data, unsigned size);$/;"	p	typeref:typename:int
+mtar_write_dir_header	vendor/microtar-0.1.0/src/microtar.c	/^int mtar_write_dir_header(mtar_t *tar, const char *name) {$/;"	f	typeref:typename:int
+mtar_write_dir_header	vendor/microtar-0.1.0/src/microtar.h	/^int mtar_write_dir_header(mtar_t *tar, const char *name);$/;"	p	typeref:typename:int
+mtar_write_file_header	vendor/microtar-0.1.0/src/microtar.c	/^int mtar_write_file_header(mtar_t *tar, const char *name, unsigned size) {$/;"	f	typeref:typename:int
+mtar_write_file_header	vendor/microtar-0.1.0/src/microtar.h	/^int mtar_write_file_header(mtar_t *tar, const char *name, unsigned size);$/;"	p	typeref:typename:int
+mtar_write_header	vendor/microtar-0.1.0/src/microtar.c	/^int mtar_write_header(mtar_t *tar, const mtar_header_t *h) {$/;"	f	typeref:typename:int
+mtar_write_header	vendor/microtar-0.1.0/src/microtar.h	/^int mtar_write_header(mtar_t *tar, const mtar_header_t *h);$/;"	p	typeref:typename:int
+mtime	vendor/microtar-0.1.0/src/microtar.c	/^  char mtime[12];$/;"	m	struct:__anonc24b2ad50108	typeref:typename:char[12]	file:
+mtime	vendor/microtar-0.1.0/src/microtar.h	/^  unsigned mtime;$/;"	m	struct:__anonc24b2ada0308	typeref:typename:unsigned
 multiline	vendor/lua-5.4.8/src/lua.c	/^static int multiline (lua_State *L) {$/;"	f	typeref:typename:int	file:
 n	vendor/lua-5.4.8/src/lauxlib.c	/^  int n;  \/* number of pre-read characters *\/$/;"	m	struct:LoadF	typeref:typename:int	file:
 n	vendor/lua-5.4.8/src/lauxlib.h	/^  size_t n;  \/* number of characters in buffer *\/$/;"	m	struct:luaL_Buffer	typeref:typename:size_t
@@ -4696,6 +4802,8 @@ name	vendor/lua-5.4.8/src/lparser.h	/^    TString *name;  \/* variable name *\/$
 name	vendor/lua-5.4.8/src/lparser.h	/^  TString *name;  \/* label identifier *\/$/;"	m	struct:Labeldesc	typeref:typename:TString *
 name	vendor/lua-5.4.8/src/lua.h	/^  const char *name;	\/* (n) *\/$/;"	m	struct:lua_Debug	typeref:typename:const char *
 name	vendor/lua-5.4.8/src/lundump.c	/^  const char *name;$/;"	m	struct:__anon98fd752a0108	typeref:typename:const char *	file:
+name	vendor/microtar-0.1.0/src/microtar.c	/^  char name[100];$/;"	m	struct:__anonc24b2ad50108	typeref:typename:char[100]	file:
+name	vendor/microtar-0.1.0/src/microtar.h	/^  char name[100];$/;"	m	struct:__anonc24b2ada0308	typeref:typename:char[100]
 name	vendor/raylib-5.5_linux_amd64/include/raylib.h	/^    char name[32];          \/\/ Animation name$/;"	m	struct:ModelAnimation	typeref:typename:char[32]
 name	vendor/raylib-5.5_linux_amd64/include/raylib.h	/^    char name[32];          \/\/ Bone name$/;"	m	struct:BoneInfo	typeref:typename:char[32]
 namewhat	vendor/lua-5.4.8/src/lua.h	/^  const char *namewhat;	\/* (n) 'global', 'local', 'field', 'method' *\/$/;"	m	struct:lua_Debug	typeref:typename:const char *
@@ -4719,6 +4827,7 @@ next	vendor/lua-5.4.8/src/llex.c	/^#define next(/;"	d	file:
 next	vendor/lua-5.4.8/src/lobject.h	/^      struct UpVal *next;  \/* linked list *\/$/;"	m	struct:UpVal::__anon808f9fcd060a::__anon808f9fcd0708	typeref:struct:UpVal *
 next	vendor/lua-5.4.8/src/lobject.h	/^    int next;  \/* for chaining *\/$/;"	m	struct:Node::NodeKey	typeref:typename:int
 next	vendor/lua-5.4.8/src/lstate.h	/^  struct CallInfo *previous, *next;  \/* dynamic call link *\/$/;"	m	struct:CallInfo	typeref:struct:CallInfo *
+next_char	stdlib/json.lua	/^local function next_char(str, idx, set, negate)$/;"	f
 next_ci	vendor/lua-5.4.8/src/ldo.c	/^#define next_ci(/;"	d	file:
 nextc	vendor/lua-5.4.8/src/liolib.c	/^static int nextc (RN *rn) {$/;"	f	typeref:typename:int	file:
 nextline	vendor/lua-5.4.8/src/ldebug.c	/^static int nextline (const Proto *p, int currentline, int pc) {$/;"	f	typeref:typename:int	file:
@@ -4860,6 +4969,8 @@ os_time	vendor/lua-5.4.8/src/loslib.c	/^static int os_time (lua_State *L) {$/;"	
 os_tmpname	vendor/lua-5.4.8/src/loslib.c	/^static int os_tmpname (lua_State *L) {$/;"	f	typeref:typename:int	file:
 otherwhite	vendor/lua-5.4.8/src/lgc.h	/^#define otherwhite(/;"	d
 output	vendor/lua-5.4.8/src/luac.c	/^static const char* output=Output;	\/* actual output file name *\/$/;"	v	typeref:typename:const char *	file:
+owner	vendor/microtar-0.1.0/src/microtar.c	/^  char owner[8];$/;"	m	struct:__anonc24b2ad50108	typeref:typename:char[8]	file:
+owner	vendor/microtar-0.1.0/src/microtar.h	/^  unsigned owner;$/;"	m	struct:__anonc24b2ada0308	typeref:typename:unsigned
 p	vendor/lua-5.4.8/src/lobject.h	/^    TValue *p;  \/* points to stack or to its own value *\/$/;"	m	union:UpVal::__anon808f9fcd050a	typeref:typename:TValue *
 p	vendor/lua-5.4.8/src/lobject.h	/^  StkId p;  \/* actual pointer *\/$/;"	m	union:__anon808f9fcd020a	typeref:typename:StkId
 p	vendor/lua-5.4.8/src/lobject.h	/^  struct Proto **p;  \/* functions defined inside the function *\/$/;"	m	struct:Proto	typeref:struct:Proto **
@@ -4878,6 +4989,13 @@ params	vendor/raylib-5.5_linux_amd64/include/raylib.h	/^    float params[4];    
 params	vendor/raylib-5.5_linux_amd64/include/raylib.h	/^    int params[4];                  \/\/ Event parameters (if required)$/;"	m	struct:AutomationEvent	typeref:typename:int[4]
 parent	vendor/raylib-5.5_linux_amd64/include/raylib.h	/^    int parent;             \/\/ Bone parent$/;"	m	struct:BoneInfo	typeref:typename:int
 parlist	vendor/lua-5.4.8/src/lparser.c	/^static void parlist (LexState *ls) {$/;"	f	typeref:typename:void	file:
+parse	stdlib/json.lua	/^parse = function(str, idx)$/;"	f
+parse_array	stdlib/json.lua	/^local function parse_array(str, i)$/;"	f
+parse_literal	stdlib/json.lua	/^local function parse_literal(str, i)$/;"	f
+parse_number	stdlib/json.lua	/^local function parse_number(str, i)$/;"	f
+parse_object	stdlib/json.lua	/^local function parse_object(str, i)$/;"	f
+parse_string	stdlib/json.lua	/^local function parse_string(str, i)$/;"	f
+parse_unicode_escape	stdlib/json.lua	/^local function parse_unicode_escape(s)$/;"	f
 partition	vendor/lua-5.4.8/src/ltablib.c	/^static IdxT partition (lua_State *L, IdxT lo, IdxT up) {$/;"	f	typeref:typename:IdxT	file:
 patchlistaux	vendor/lua-5.4.8/src/lcode.c	/^static void patchlistaux (FuncState *fs, int list, int vtarget, int reg,$/;"	f	typeref:typename:void	file:
 patchtestreg	vendor/lua-5.4.8/src/lcode.c	/^static int patchtestreg (FuncState *fs, int node, int reg) {$/;"	f	typeref:typename:int	file:
@@ -4894,6 +5012,7 @@ pmain	vendor/lua-5.4.8/src/luac.c	/^static int pmain(lua_State* L)$/;"	f	typeref
 point	vendor/raylib-5.5_linux_amd64/include/raylib.h	/^    Vector3 point;          \/\/ Point of the nearest hit$/;"	m	struct:RayCollision	typeref:typename:Vector3
 point2uint	vendor/lua-5.4.8/src/llimits.h	/^#define point2uint(/;"	d
 poptbclist	vendor/lua-5.4.8/src/lfunc.c	/^static void poptbclist (lua_State *L) {$/;"	f	typeref:typename:void	file:
+pos	vendor/microtar-0.1.0/src/microtar.h	/^  unsigned pos;$/;"	m	struct:mtar_t	typeref:typename:unsigned
 position	vendor/raylib-5.5_linux_amd64/include/raylib.h	/^    Vector3 position;       \/\/ Camera position$/;"	m	struct:Camera3D	typeref:typename:Vector3
 position	vendor/raylib-5.5_linux_amd64/include/raylib.h	/^    Vector3 position;       \/\/ Ray position (origin)$/;"	m	struct:Ray	typeref:typename:Vector3
 posix	vendor/lua-5.4.8/src/Makefile	/^posix:$/;"	t
@@ -4950,7 +5069,9 @@ rAudioBuffer	vendor/raylib-5.5_linux_amd64/include/raylib.h	/^typedef struct rAu
 rAudioProcessor	vendor/raylib-5.5_linux_amd64/include/raylib.h	/^typedef struct rAudioProcessor rAudioProcessor;$/;"	t	typeref:struct:rAudioProcessor
 randfuncs	vendor/lua-5.4.8/src/lmathlib.c	/^static const luaL_Reg randfuncs[] = {$/;"	v	typeref:typename:const luaL_Reg[]	file:
 randseed	vendor/lua-5.4.8/src/lmathlib.c	/^static void randseed (lua_State *L, RanState *state) {$/;"	f	typeref:typename:void	file:
+raw_to_header	vendor/microtar-0.1.0/src/microtar.c	/^static int raw_to_header(mtar_header_t *h, const mtar_raw_header_t *rh) {$/;"	f	typeref:typename:int	file:
 rawtt	vendor/lua-5.4.8/src/lobject.h	/^#define rawtt(/;"	d
+read	vendor/microtar-0.1.0/src/microtar.h	/^  int (*read)(mtar_t *tar, void *data, unsigned size);$/;"	m	struct:mtar_t	typeref:typename:int (*)(mtar_t * tar,void * data,unsigned size)
 read_all	vendor/lua-5.4.8/src/liolib.c	/^static void read_all (lua_State *L, FILE *f) {$/;"	f	typeref:typename:void	file:
 read_chars	vendor/lua-5.4.8/src/liolib.c	/^static int read_chars (lua_State *L, FILE *f, size_t n) {$/;"	f	typeref:typename:int	file:
 read_line	vendor/lua-5.4.8/src/liolib.c	/^static int read_line (lua_State *L, FILE *f, int chop) {$/;"	f	typeref:typename:int	file:
@@ -4975,6 +5096,7 @@ reglevel	vendor/lua-5.4.8/src/lparser.c	/^static int reglevel (FuncState *fs, in
 rehash	vendor/lua-5.4.8/src/ltable.c	/^static void rehash (lua_State *L, Table *t, const TValue *ek) {$/;"	f	typeref:typename:void	file:
 reinsert	vendor/lua-5.4.8/src/ltable.c	/^static void reinsert (lua_State *L, Table *ot, Table *t) {$/;"	f	typeref:typename:void	file:
 relstack	vendor/lua-5.4.8/src/ldo.c	/^static void relstack (lua_State *L) {$/;"	f	typeref:typename:void	file:
+remaining_data	vendor/microtar-0.1.0/src/microtar.h	/^  unsigned remaining_data;$/;"	m	struct:mtar_t	typeref:typename:unsigned
 remarkupvals	vendor/lua-5.4.8/src/lgc.c	/^static int remarkupvals (global_State *g) {$/;"	f	typeref:typename:int	file:
 removelastinstruction	vendor/lua-5.4.8/src/lcode.c	/^static void removelastinstruction (FuncState *fs) {$/;"	f	typeref:typename:void	file:
 removelastlineinfo	vendor/lua-5.4.8/src/lcode.c	/^static void removelastlineinfo (FuncState *fs) {$/;"	f	typeref:typename:void	file:
@@ -5381,6 +5503,7 @@ rotation	vendor/raylib-5.5_linux_amd64/include/raylib.h	/^    float rotation;   
 rotl	vendor/lua-5.4.8/src/lmathlib.c	/^static Rand64 rotl (Rand64 i, int n) {$/;"	f	typeref:typename:Rand64	file:
 rotl	vendor/lua-5.4.8/src/lmathlib.c	/^static Rand64 rotl (Rand64 x, int n) {$/;"	f	typeref:typename:Rand64	file:
 rotl1	vendor/lua-5.4.8/src/lmathlib.c	/^static Rand64 rotl1 (Rand64 i, int n) {$/;"	f	typeref:typename:Rand64	file:
+round_up	vendor/microtar-0.1.0/src/microtar.c	/^static unsigned round_up(unsigned n, unsigned incr) {$/;"	f	typeref:typename:unsigned	file:
 runafewfinalizers	vendor/lua-5.4.8/src/lgc.c	/^static int runafewfinalizers (lua_State *L, int n) {$/;"	f	typeref:typename:int	file:
 runargs	vendor/lua-5.4.8/src/lua.c	/^static int runargs (lua_State *L, char **argv, int n) {$/;"	f	typeref:typename:int	file:
 s	vendor/lua-5.4.8/src/lauxlib.c	/^  const char *s;$/;"	m	struct:LoadS	typeref:typename:const char *	file:
@@ -5411,6 +5534,7 @@ searchpath	vendor/lua-5.4.8/src/loadlib.c	/^static const char *searchpath (lua_S
 searchupvalue	vendor/lua-5.4.8/src/lparser.c	/^static int searchupvalue (FuncState *fs, TString *name) {$/;"	f	typeref:typename:int	file:
 searchvar	vendor/lua-5.4.8/src/lparser.c	/^static int searchvar (FuncState *fs, TString *n, expdesc *var) {$/;"	f	typeref:typename:int	file:
 seed	vendor/lua-5.4.8/src/lstate.h	/^  unsigned int seed;  \/* randomized seed for hashes *\/$/;"	m	struct:global_State	typeref:typename:unsigned int
+seek	vendor/microtar-0.1.0/src/microtar.h	/^  int (*seek)(mtar_t *tar, unsigned pos);$/;"	m	struct:mtar_t	typeref:typename:int (*)(mtar_t * tar,unsigned pos)
 seminfo	vendor/lua-5.4.8/src/llex.h	/^  SemInfo seminfo;$/;"	m	struct:Token	typeref:typename:SemInfo
 separatetobefnz	vendor/lua-5.4.8/src/lgc.c	/^static void separatetobefnz (global_State *g, int all) {$/;"	f	typeref:typename:void	file:
 set2	vendor/lua-5.4.8/src/ltablib.c	/^static void set2 (lua_State *L, IdxT i, IdxT j) {$/;"	f	typeref:typename:void	file:
@@ -5489,6 +5613,8 @@ size	vendor/lua-5.4.8/src/lauxlib.h	/^  size_t size;  \/* buffer size *\/$/;"	m	
 size	vendor/lua-5.4.8/src/lparser.h	/^    int size;$/;"	m	struct:Dyndata::__anon337ee4430608	typeref:typename:int
 size	vendor/lua-5.4.8/src/lparser.h	/^  int size;  \/* array size *\/$/;"	m	struct:Labellist	typeref:typename:int
 size	vendor/lua-5.4.8/src/lstate.h	/^  int size;$/;"	m	struct:stringtable	typeref:typename:int
+size	vendor/microtar-0.1.0/src/microtar.c	/^  char size[12];$/;"	m	struct:__anonc24b2ad50108	typeref:typename:char[12]	file:
+size	vendor/microtar-0.1.0/src/microtar.h	/^  unsigned size;$/;"	m	struct:__anonc24b2ada0308	typeref:typename:unsigned
 sizeCclosure	vendor/lua-5.4.8/src/lfunc.h	/^#define sizeCclosure(/;"	d
 sizeLclosure	vendor/lua-5.4.8/src/lfunc.h	/^#define sizeLclosure(/;"	d
 size_t	vendor/lua-5.4.8/src/lua.h	/^LUA_API size_t   (lua_stringtonumber) (lua_State *L, const char *s);$/;"	p	typeref:typename:LUA_API
@@ -5561,6 +5687,7 @@ str_sub	vendor/lua-5.4.8/src/lstrlib.c	/^static int str_sub (lua_State *L) {$/;"
 str_unpack	vendor/lua-5.4.8/src/lstrlib.c	/^static int str_unpack (lua_State *L) {$/;"	f	typeref:typename:int	file:
 str_upper	vendor/lua-5.4.8/src/lstrlib.c	/^static int str_upper (lua_State *L) {$/;"	f	typeref:typename:int	file:
 strcache	vendor/lua-5.4.8/src/lstate.h	/^  TString *strcache[STRCACHE_N][STRCACHE_M];  \/* cache for strings in API *\/$/;"	m	struct:global_State	typeref:typename:TString * [][]
+stream	vendor/microtar-0.1.0/src/microtar.h	/^  void *stream;$/;"	m	struct:mtar_t	typeref:typename:void *
 stream	vendor/raylib-5.5_linux_amd64/include/raylib.h	/^    AudioStream stream;         \/\/ Audio stream$/;"	m	struct:Music	typeref:typename:AudioStream
 stream	vendor/raylib-5.5_linux_amd64/include/raylib.h	/^    AudioStream stream;         \/\/ Audio stream$/;"	m	struct:Sound	typeref:typename:AudioStream
 stringK	vendor/lua-5.4.8/src/lcode.c	/^static int stringK (FuncState *fs, TString *s) {$/;"	f	typeref:typename:int	file:
@@ -5635,6 +5762,9 @@ texture	vendor/raylib-5.5_linux_amd64/include/raylib.h	/^    Texture2D texture; 
 textureId	vendor/raylib-5.5_linux_amd64/include/rlgl.h	/^    unsigned int textureId;     \/\/ Texture id to be used on the draw -> Use to create new draw/;"	m	struct:rlDrawCall	typeref:typename:unsigned int
 th	vendor/lua-5.4.8/src/lstate.h	/^  struct lua_State th;  \/* thread *\/$/;"	m	union:GCUnion	typeref:struct:lua_State
 thvalue	vendor/lua-5.4.8/src/lobject.h	/^#define thvalue(/;"	d
+tilemap	stdlib/tilemap.h	/^unsigned char tilemap[] = {$/;"	v	typeref:typename:unsigned char[]
+tilemap_H	stdlib/tilemap.h	/^#define tilemap_H$/;"	d
+tilemap_len	stdlib/tilemap.h	/^unsigned int tilemap_len = 124;$/;"	v	typeref:typename:unsigned int
 times5	vendor/lua-5.4.8/src/lmathlib.c	/^static Rand64 times5 (Rand64 i) {$/;"	f	typeref:typename:Rand64	file:
 times9	vendor/lua-5.4.8/src/lmathlib.c	/^static Rand64 times9 (Rand64 i) {$/;"	f	typeref:typename:Rand64	file:
 tinsert	vendor/lua-5.4.8/src/ltablib.c	/^static int tinsert (lua_State *L) {$/;"	f	typeref:typename:int	file:
@@ -5677,6 +5807,7 @@ traversetable	vendor/lua-5.4.8/src/lgc.c	/^static lu_mem traversetable (global_S
 traversethread	vendor/lua-5.4.8/src/lgc.c	/^static int traversethread (global_State *g, lua_State *th) {$/;"	f	typeref:typename:int	file:
 traverseudata	vendor/lua-5.4.8/src/lgc.c	/^static int traverseudata (global_State *g, Udata *u) {$/;"	f	typeref:typename:int	file:
 traverseweakvalue	vendor/lua-5.4.8/src/lgc.c	/^static void traverseweakvalue (global_State *g, Table *h) {$/;"	f	typeref:typename:void	file:
+tread	vendor/microtar-0.1.0/src/microtar.c	/^static int tread(mtar_t *tar, void *data, unsigned size) {$/;"	f	typeref:typename:int	file:
 treatstackoption	vendor/lua-5.4.8/src/ldblib.c	/^static void treatstackoption (lua_State *L, lua_State *L1, const char *fname) {$/;"	f	typeref:typename:void	file:
 tremove	vendor/lua-5.4.8/src/ltablib.c	/^static int tremove (lua_State *L) {$/;"	f	typeref:typename:int	file:
 triangleCount	vendor/raylib-5.5_linux_amd64/include/raylib.h	/^    int triangleCount;      \/\/ Number of triangles stored (indexed or not)$/;"	m	struct:Mesh	typeref:typename:int
@@ -5715,9 +5846,12 @@ ttypename	vendor/lua-5.4.8/src/ltm.h	/^#define ttypename(/;"	d
 ttypetag	vendor/lua-5.4.8/src/lobject.h	/^#define ttypetag(/;"	d
 tunpack	vendor/lua-5.4.8/src/ltablib.c	/^static int tunpack (lua_State *L) {$/;"	f	typeref:typename:int	file:
 twoto	vendor/lua-5.4.8/src/lobject.h	/^#define twoto(/;"	d
+twrite	vendor/microtar-0.1.0/src/microtar.c	/^static int twrite(mtar_t *tar, const void *data, unsigned size) {$/;"	f	typeref:typename:int	file:
 twups	vendor/lua-5.4.8/src/lstate.h	/^  struct lua_State *twups;  \/* list of threads with open upvalues *\/$/;"	m	struct:global_State	typeref:struct:lua_State *
 twups	vendor/lua-5.4.8/src/lstate.h	/^  struct lua_State *twups;  \/* list of threads with open upvalues *\/$/;"	m	struct:lua_State	typeref:struct:lua_State *
 txtToken	vendor/lua-5.4.8/src/llex.c	/^static const char *txtToken (LexState *ls, int token) {$/;"	f	typeref:typename:const char *	file:
+type	vendor/microtar-0.1.0/src/microtar.c	/^  char type;$/;"	m	struct:__anonc24b2ad50108	typeref:typename:char	file:
+type	vendor/microtar-0.1.0/src/microtar.h	/^  unsigned type;$/;"	m	struct:__anonc24b2ada0308	typeref:typename:unsigned
 type	vendor/raylib-5.5_linux_amd64/include/raylib.h	/^    unsigned int type;              \/\/ Event type (AutomationEventType)$/;"	m	struct:AutomationEvent	typeref:typename:unsigned int
 typeerror	vendor/lua-5.4.8/src/ldebug.c	/^static l_noret typeerror (lua_State *L, const TValue *o, const char *op,$/;"	f	typeref:typename:l_noret	file:
 u	vendor/lua-5.4.8/src/lobject.h	/^  } u;$/;"	m	struct:TString	typeref:union:TString::__anon808f9fcd030a
@@ -5828,6 +5962,8 @@ width	vendor/raylib-5.5_linux_amd64/include/raylib.h	/^    float width;         
 width	vendor/raylib-5.5_linux_amd64/include/raylib.h	/^    int width;              \/\/ Image base width$/;"	m	struct:Image	typeref:typename:int
 width	vendor/raylib-5.5_linux_amd64/include/raylib.h	/^    int width;              \/\/ Texture base width$/;"	m	struct:Texture	typeref:typename:int
 withvariant	vendor/lua-5.4.8/src/lobject.h	/^#define withvariant(/;"	d
+write	vendor/microtar-0.1.0/src/microtar.h	/^  int (*write)(mtar_t *tar, const void *data, unsigned size);$/;"	m	struct:mtar_t	typeref:typename:int (*)(mtar_t * tar,const void * data,unsigned size)
+write_null_bytes	vendor/microtar-0.1.0/src/microtar.c	/^static int write_null_bytes(mtar_t *tar, int n) {$/;"	f	typeref:typename:int	file:
 writer	vendor/lua-5.4.8/src/ldump.c	/^  lua_Writer writer;$/;"	m	struct:__anon6dcdaf670108	typeref:typename:lua_Writer	file:
 writer	vendor/lua-5.4.8/src/lstrlib.c	/^static int writer (lua_State *L, const void *b, size_t size, void *ud) {$/;"	f	typeref:typename:int	file:
 writer	vendor/lua-5.4.8/src/luac.c	/^static int writer(lua_State* L, const void* p, size_t size, void* u)$/;"	f	typeref:typename:int	file:

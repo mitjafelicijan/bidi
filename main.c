@@ -5,8 +5,24 @@
 #include "lualib.h"
 #include "lauxlib.h"
 
+#include "stdlib/color.h"
+
 #define IN_FILE "test/main.lua"
 #define DEBUG_LEVEL LOG_DEBUG
+
+static int lua_getfield_int(lua_State *L, int index, const char *key) {
+	lua_getfield(L, index, key);
+	int val = (int)luaL_checknumber(L, -1);
+	lua_pop(L, 1);
+	return val;
+}
+
+static int lua_getfield_int_opt(lua_State *L, int index, const char *key, int def) {
+	lua_getfield(L, index, key);
+	int val = lua_isnil(L, -1) ? def : (int)luaL_checknumber(L, -1);
+	lua_pop(L, 1);
+	return val;
+}
 
 static int l_open_window(lua_State *L) {
 	int width = luaL_checknumber(L, 1);
@@ -18,8 +34,9 @@ static int l_open_window(lua_State *L) {
 	return 0;
 }
 
-static int l_window_should_close(lua_State *L) {
-	lua_pushboolean(L, WindowShouldClose());
+// TODO: This function name is still a bit sus. Revisit the name later.
+static int l_window_running(lua_State *L) {
+	lua_pushboolean(L, !WindowShouldClose());
 	return 1;
 }
 
@@ -47,7 +64,14 @@ static int l_end_drawing(lua_State *L) {
 }
 
 static int l_clear_window(lua_State *L) {
-	ClearBackground(BLACK);
+	luaL_checktype(L, 1, LUA_TTABLE);
+	Color color = {
+		.r = (unsigned char)lua_getfield_int(L, 1, "r"),
+		.g = (unsigned char)lua_getfield_int(L, 1, "g"),
+		.b = (unsigned char)lua_getfield_int(L, 1, "b"),
+		.a = (unsigned char)lua_getfield_int_opt(L, 1, "a", 255)
+	};
+	ClearBackground(color);
 	return 0;
 }
 
@@ -64,12 +88,19 @@ int main(void) {
 
 	lua_register(L, "open_window", l_open_window);
 	lua_register(L, "close_window", l_close_window);
-	lua_register(L, "window_should_close", l_window_should_close);
+	lua_register(L, "window_running", l_window_running);
 	lua_register(L, "begin_drawing", l_begin_drawing);
 	lua_register(L, "end_drawing", l_end_drawing);
 	lua_register(L, "set_fps", l_set_fps);
 	lua_register(L, "draw_fps", l_draw_fps);
 	lua_register(L, "clear_window", l_clear_window);
+
+	if (luaL_loadbuffer(L, color, color_len, "color") || lua_pcall(L, 0, 1, 0)) {
+		fprintf(stderr, "Error loading color.lua: %s\n", lua_tostring(L, -1));
+		lua_close(L);
+		return 1;
+	}
+	lua_setglobal(L, "color");
 
 	// TODO: This should probably use loadbuffer instead.
 	// https://www.lua.org/manual/5.4/manual.html#luaL_loadbuffer

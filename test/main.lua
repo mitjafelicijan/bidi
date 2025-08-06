@@ -10,9 +10,11 @@ file:close()
 open_window(600, 600, "My Game")
 set_fps(60)
 
-while not window_should_close() do
+BLACK = { r = 0, g = 0, b = 0 }
+
+while window_running() do
 	begin_drawing()
-	clear_window()
+	clear_window(color.VIOLET)
 
 	draw_fps()
 	end_drawing()
