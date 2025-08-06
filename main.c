@@ -1,4 +1,7 @@
 #include <stdio.h>
+#include <stdarg.h>
+#include <getopt.h>
+#include <stdlib.h>
 
 #include "raylib.h"
 #include "lua.h"
@@ -9,7 +12,7 @@
 #include "stdlib/color.h"
 #include "stdlib/tilemap.h"
 
-#define IN_FILE "test/main.lua"
+#define VERSION "x.x"
 #define DEBUG_LEVEL LOG_DEBUG
 
 static int lua_getfield_int(lua_State *L, int index, const char *key) {
@@ -91,33 +94,81 @@ static int l_draw_fps(lua_State *L) {
 	return 0;
 }
 
-int main(void) {
-	SetTraceLogLevel(DEBUG_LEVEL);
+static void help(const char *argv0) {
+	printf("Usage: %s [options]\n"
+			"\nAvailable options:\n"
+			"  -r,--run=file.lua            run input file\n"
+			"  -b,--bundle                  bundles this folder\n"
+			"  -h,--help                    this help\n"
+			"  -v,--version                 show version\n",
+			argv0);
+}
 
-	lua_State *L = luaL_newstate();
-	luaL_openlibs(L);
+static void version(const char *argv0) {
+	printf("%s version %s\n", argv0, VERSION);
+}
 
-	// Registring Raylib mappings.
-	lua_register(L, "open_window", l_open_window);
-	lua_register(L, "close_window", l_close_window);
-	lua_register(L, "window_running", l_window_running);
-	lua_register(L, "begin_drawing", l_begin_drawing);
-	lua_register(L, "end_drawing", l_end_drawing);
-	lua_register(L, "set_fps", l_set_fps);
-	lua_register(L, "draw_fps", l_draw_fps);
-	lua_register(L, "clear_window", l_clear_window);
+int main(int argc, char *argv[]) {
+	const char short_options[] = "r:bhv";
+	const struct option long_options[] = {
+		{ "run", 1, NULL, 'r' },
+		{ "bundle", 0, NULL, 'b' },
+		{ "help", 0, NULL, 'h' },
+		{ "version", 0, NULL, 'v' },
+		{ 0 },
+	};
 
-	// Loading embeded modules into Lua state.
-	if (!load_embedded_module(L, json, json_len, "json")) return 1;
-	if (!load_embedded_module(L, color, color_len, "color")) return 1;
-	if (!load_embedded_module(L, tilemap, tilemap_len, "tilemap")) return 1;
-
-	// Interpreting and running input file Lua script.
-	if (luaL_loadfile(L, IN_FILE) || lua_pcall(L, 0, 0, 0)) {
-		fprintf(stderr, "Error: %s\n", lua_tostring(L, -1));
-		return 1;
+	int opt;
+	const char *run_file = NULL;
+	while ((opt = getopt_long(argc, argv, short_options, long_options, NULL)) != -1) {
+		switch (opt) {
+			case 'r':
+				run_file = optarg;
+				break;
+			case 'b':
+				printf("TODO: Bundler\n");
+				return 0;
+			case 'h':
+				help(argv[0]);
+				return 0;
+			case 'v':
+				version(argv[0]);
+				return 0;
+			default:
+				fprintf(stdout, "Missing options. Check help.\n");
+				return 0;
+		}
 	}
 
-	lua_close(L);
+	if (run_file) {
+		SetTraceLogLevel(DEBUG_LEVEL);
+
+		lua_State *L = luaL_newstate();
+		luaL_openlibs(L);
+
+		// Registring Raylib mappings.
+		lua_register(L, "open_window", l_open_window);
+		lua_register(L, "close_window", l_close_window);
+		lua_register(L, "window_running", l_window_running);
+		lua_register(L, "begin_drawing", l_begin_drawing);
+		lua_register(L, "end_drawing", l_end_drawing);
+		lua_register(L, "set_fps", l_set_fps);
+		lua_register(L, "draw_fps", l_draw_fps);
+		lua_register(L, "clear_window", l_clear_window);
+
+		// Loading embeded modules into Lua state.
+		if (!load_embedded_module(L, json, json_len, "json")) return 1;
+		if (!load_embedded_module(L, color, color_len, "color")) return 1;
+		if (!load_embedded_module(L, tilemap, tilemap_len, "tilemap")) return 1;
+
+		// Interpreting and running input file Lua script.
+		if (luaL_loadfile(L, run_file) || lua_pcall(L, 0, 0, 0)) {
+			fprintf(stderr, "Error: %s\n", lua_tostring(L, -1));
+			return 1;
+		}
+
+		lua_close(L);
+	}
+
 	return 0;
 }
