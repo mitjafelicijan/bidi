@@ -1,5 +1,6 @@
 # Binary files
 bidi
+hexdump
 vendor/lua*/src/lua
 vendor/lua*/src/luac
 
