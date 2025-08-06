@@ -24,3 +24,7 @@ hexdump: hexdump.c
 
 lua:
 	cd vendor/$(LUA) && make
+
+clean:
+	-rm $(PROG) hexdump fonts/*.h stdlib/.*h
+	cd vendor/$(LUA) && make clean
