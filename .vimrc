@@ -2,9 +2,10 @@ set makeprg=make
 set errorformat=%f:%l:%c:\ %m
 
 let g:gdb_executable = 'bidi'
-let g:gdb_arguments = '-r examples/json.lua'
+let g:gdb_arguments = '-r examples/graphics.lua'
 
 nnoremap <leader>m :call LocalMake()<CR>
+nnoremap <leader>r :execute '!./' . g:gdb_executable . ' ' . g:gdb_arguments<CR>
 nnoremap <leader>bm :execute '!make && gdb -ex "break main" -ex "run" --args ' . g:gdb_executable . ' ' . g:gdb_arguments<CR>
 nnoremap <leader>bl :execute '!make && gdb -ex "break ' . line('.') . '" -ex "run" --args ' . g:gdb_executable . ' ' . g:gdb_arguments<CR>
 
@@ -24,7 +25,3 @@ function! LocalMake()
 		cclose
 	endif
 endfunction
-
-" Hardcoded example
-" nnoremap <leader>bm :!gdb -ex "break main" -ex "run" --args bidi -r examples/json.lua<CR>
-" nnoremap <leader>bl :execute '!gdb -ex "break ' . line('.') . '" -ex "run" --args bidi -r examples/json.lua'<CR>

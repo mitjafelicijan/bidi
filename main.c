@@ -109,11 +109,6 @@ static int l_clear_window(lua_State *L) {
 	return 0;
 }
 
-static int l_draw_fps_meter(lua_State *L) {
-	DrawFPS(GetScreenWidth() - 100, 20); 
-	return 0;
-}
-
 static int l_draw_info(lua_State *L) {
 	float delta = GetFrameTime();
 	int fps = GetFPS();
@@ -127,14 +122,52 @@ static int l_draw_info(lua_State *L) {
 	return 0;
 }
 
+static int l_draw_rect(lua_State *L) {
+	int x = luaL_checknumber(L, 1);
+	int y = luaL_checknumber(L, 2);
+	int width = luaL_checknumber(L, 3);
+	int height = luaL_checknumber(L, 4);
+	luaL_checktype(L, 5, LUA_TTABLE);
+	Color color = {
+		.r = (unsigned char)lua_getfield_int(L, 5, "r"),
+		.g = (unsigned char)lua_getfield_int(L, 5, "g"),
+		.b = (unsigned char)lua_getfield_int(L, 5, "b"),
+		.a = (unsigned char)lua_getfield_int_opt(L, 5, "a", 255)
+	};
+	DrawRectangle(x, y, width, height, color);
+	return 0;
+}
+
+static int l_draw_text(lua_State *L) {
+	const char *text = luaL_checkstring(L, 1);
+	int x = luaL_checknumber(L, 2);
+	int y = luaL_checknumber(L, 3);
+	int size = luaL_checknumber(L, 4);
+	luaL_checktype(L, 5, LUA_TTABLE);
+	Color color = {
+		.r = (unsigned char)lua_getfield_int(L, 5, "r"),
+		.g = (unsigned char)lua_getfield_int(L, 5, "g"),
+		.b = (unsigned char)lua_getfield_int(L, 5, "b"),
+		.a = (unsigned char)lua_getfield_int_opt(L, 5, "a", 255)
+	};
+	DrawTextEx(ctx.font, text, (Vector2){ x, y }, size, 0, color);
+	return 0;
+}
+
+static int l_draw_pixel(lua_State *L) {}
+static int l_draw_line(lua_State *L) {}
+static int l_draw_circle(lua_State *L) {}
+static int l_draw_ellipse(lua_State *L) {}
+static int l_draw_triangle(lua_State *L) {}
+
 static void help(const char *argv0) {
 	printf("Usage: %s [options]\n"
 			"\nAvailable options:\n"
-			"  -r,--run=file.lua            run input file\n"
-			"  -b,--bundle                  bundles this folder\n"
-			"  -d,--debug                   prints debug information\n"
-			"  -h,--help                    this help\n"
-			"  -v,--version                 show version\n",
+			"  -r,--run=file.lua       run input file\n"
+			"  -b,--bundle             bundles this folder\n"
+			"  -d,--debug              prints debug information\n"
+			"  -h,--help               this help\n"
+			"  -v,--version            show version\n",
 			argv0);
 }
 
@@ -193,9 +226,10 @@ int main(int argc, char *argv[]) {
 		lua_register(L, "begin_drawing", l_begin_drawing);
 		lua_register(L, "end_drawing", l_end_drawing);
 		lua_register(L, "set_fps", l_set_fps);
-		lua_register(L, "draw_fps_meter", l_draw_fps_meter);
 		lua_register(L, "draw_info", l_draw_info);
 		lua_register(L, "clear_window", l_clear_window);
+		lua_register(L, "draw_rect", l_draw_rect);
+		lua_register(L, "draw_text", l_draw_text);
 
 		// Loading embeded modules into Lua state.
 		if (!load_embedded_module(L, json, json_len, "json")) return 1;
