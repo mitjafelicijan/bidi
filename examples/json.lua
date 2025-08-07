@@ -1,4 +1,4 @@
-local file = io.open("test/test.json", "r")
+local file = io.open("examples/test.json", "r")
 local content = file:read("*a")
 file:close()
 

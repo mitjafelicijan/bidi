@@ -1,4 +1,4 @@
-open_window(800, 800, "My Game")
+open_window(800, 800, "Sample Window")
 set_fps(60)
 
 while window_running() do

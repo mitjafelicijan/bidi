@@ -120,9 +120,9 @@ static int l_draw_info(lua_State *L) {
 	double runtime = GetTime();
 	int height = GetScreenHeight();
 
-	DrawTextEx(ctx.font, TextFormat("dt: %f", delta), (Vector2){ 20, height - 80 }, 20, 0, RAYWHITE);
+	DrawTextEx(ctx.font, TextFormat("fps: %d", fps), (Vector2){ 20, height - 80 }, 20, 0, RAYWHITE);
 	DrawTextEx(ctx.font, TextFormat("run: %f", runtime), (Vector2){ 20, height - 60 }, 20, 0, RAYWHITE);
-	DrawTextEx(ctx.font, TextFormat("fps: %d", fps), (Vector2){ 20, height - 40 }, 20, 0, RAYWHITE);
+	DrawTextEx(ctx.font, TextFormat("dt: %f", delta), (Vector2){ 20, height - 40 }, 20, 0, RAYWHITE);
 
 	return 0;
 }
@@ -183,7 +183,6 @@ int main(int argc, char *argv[]) {
 	if (run_file) {
 		SetTraceLogLevel(debug_level);
 
-
 		lua_State *L = luaL_newstate();
 		luaL_openlibs(L);
 
@@ -209,7 +208,7 @@ int main(int argc, char *argv[]) {
 			return 1;
 		}
 
-		UnloadFont(ctx.font);                                                           // Unload font from GPU memory (VRAM)
+		UnloadFont(ctx.font);
 		lua_close(L);
 	}
 
