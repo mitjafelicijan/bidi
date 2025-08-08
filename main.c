@@ -81,6 +81,16 @@ static int l_set_fps(lua_State *L) {
 	return 0;
 }
 
+static int l_get_dt(lua_State *L) {
+	lua_pushnumber(L, GetFrameTime());
+	return 1;
+}
+
+static int l_get_fps(lua_State *L) {
+	lua_pushnumber(L, GetFPS());
+	return 1;
+}
+
 static int l_close_window(lua_State *L) {
 	CloseWindow();
 	TraceLog(LOG_DEBUG, "l_close_window");
@@ -154,11 +164,90 @@ static int l_draw_text(lua_State *L) {
 	return 0;
 }
 
-static int l_draw_pixel(lua_State *L) {}
-static int l_draw_line(lua_State *L) {}
-static int l_draw_circle(lua_State *L) {}
-static int l_draw_ellipse(lua_State *L) {}
-static int l_draw_triangle(lua_State *L) {}
+static int l_draw_pixel(lua_State *L) {
+	int x = luaL_checknumber(L, 1);
+	int y = luaL_checknumber(L, 2);
+	luaL_checktype(L, 3, LUA_TTABLE);
+	Color color = {
+		.r = (unsigned char)lua_getfield_int(L, 3, "r"),
+		.g = (unsigned char)lua_getfield_int(L, 3, "g"),
+		.b = (unsigned char)lua_getfield_int(L, 3, "b"),
+		.a = (unsigned char)lua_getfield_int_opt(L, 3, "a", 255)
+	};
+	DrawPixel(x, y, color);
+}
+
+static int l_draw_line(lua_State *L) {
+	int x1 = luaL_checknumber(L, 1);
+	int y1 = luaL_checknumber(L, 2);
+	int x2 = luaL_checknumber(L, 3);
+	int y2 = luaL_checknumber(L, 4);
+	luaL_checktype(L, 5, LUA_TTABLE);
+	Color color = {
+		.r = (unsigned char)lua_getfield_int(L, 5, "r"),
+		.g = (unsigned char)lua_getfield_int(L, 5, "g"),
+		.b = (unsigned char)lua_getfield_int(L, 5, "b"),
+		.a = (unsigned char)lua_getfield_int_opt(L, 5, "a", 255)
+	};
+	DrawLine(x1, y1, x2, y2, color);
+	return 0;
+}
+
+static int l_draw_circle(lua_State *L) {
+	int center_x = luaL_checknumber(L, 1);
+	int center_y = luaL_checknumber(L, 2);
+	int radius = luaL_checknumber(L, 3);
+	luaL_checktype(L, 4, LUA_TTABLE);
+	Color color = {
+		.r = (unsigned char)lua_getfield_int(L, 4, "r"),
+		.g = (unsigned char)lua_getfield_int(L, 4, "g"),
+		.b = (unsigned char)lua_getfield_int(L, 4, "b"),
+		.a = (unsigned char)lua_getfield_int_opt(L, 4, "a", 255)
+	};
+	DrawCircle(center_x, center_y, radius, color);
+	return 0;
+}
+
+static int l_draw_ellipse(lua_State *L) {
+	int center_x = luaL_checknumber(L, 1);
+	int center_y = luaL_checknumber(L, 2);
+	int radius_h = luaL_checknumber(L, 3);
+	int radius_v = luaL_checknumber(L, 4);
+	luaL_checktype(L, 5, LUA_TTABLE);
+	Color color = {
+		.r = (unsigned char)lua_getfield_int(L, 5, "r"),
+		.g = (unsigned char)lua_getfield_int(L, 5, "g"),
+		.b = (unsigned char)lua_getfield_int(L, 5, "b"),
+		.a = (unsigned char)lua_getfield_int_opt(L, 5, "a", 255)
+	};
+	DrawEllipse(center_x, center_y, radius_h, radius_v, color);
+	return 0;
+}
+
+static int l_draw_triangle(lua_State *L) {
+	int x1 = luaL_checknumber(L, 1);
+	int y1 = luaL_checknumber(L, 2);
+	int x2 = luaL_checknumber(L, 3);
+	int y2 = luaL_checknumber(L, 4);
+	int x3 = luaL_checknumber(L, 5);
+	int y3 = luaL_checknumber(L, 6);
+	luaL_checktype(L, 7, LUA_TTABLE);
+	Color color = {
+		.r = (unsigned char)lua_getfield_int(L, 7, "r"),
+		.g = (unsigned char)lua_getfield_int(L, 7, "g"),
+		.b = (unsigned char)lua_getfield_int(L, 7, "b"),
+		.a = (unsigned char)lua_getfield_int_opt(L, 7, "a", 255)
+	};
+
+	// NOTE: Raylib orders vertices in counter-clockwise order. We order them
+	// in clockwise order instead to make this a bit easier to use.
+	Vector2 p1 = { x1, y1 };
+	Vector2 p2 = { x3, y3 };
+	Vector2 p3 = { x2, y2 };
+
+	DrawTriangle(p1, p2, p3, color);
+	return 0;
+}
 
 static void help(const char *argv0) {
 	printf("Usage: %s [options]\n"
@@ -226,10 +315,17 @@ int main(int argc, char *argv[]) {
 		lua_register(L, "begin_drawing", l_begin_drawing);
 		lua_register(L, "end_drawing", l_end_drawing);
 		lua_register(L, "set_fps", l_set_fps);
-		lua_register(L, "draw_info", l_draw_info);
+		lua_register(L, "get_fps", l_get_fps);
+		lua_register(L, "get_dt", l_get_dt);
 		lua_register(L, "clear_window", l_clear_window);
+		lua_register(L, "draw_info", l_draw_info);
 		lua_register(L, "draw_rect", l_draw_rect);
 		lua_register(L, "draw_text", l_draw_text);
+		lua_register(L, "draw_pixel", l_draw_pixel);
+		lua_register(L, "draw_line", l_draw_line);
+		lua_register(L, "draw_circle", l_draw_circle);
+		lua_register(L, "draw_ellipse", l_draw_ellipse);
+		lua_register(L, "draw_triangle", l_draw_triangle);
 
 		// Loading embeded modules into Lua state.
 		if (!load_embedded_module(L, json, json_len, "json")) return 1;
