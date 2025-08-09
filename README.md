@@ -37,6 +37,10 @@ while window_running() do
     draw_text(string.format("fps: %d", get_fps()), 10, 30, 20, color.VIOLET)
     draw_text(string.format("dt: %.3f", get_dt()), 10, 50, 20, color.VIOLET)
 
+	if button_down(button.PAD_UP) then
+		draw_text("Pad Up", 10, 10, 20, color.VIOLET)
+	end
+
     draw_info()
     stop_drawing()
 end
