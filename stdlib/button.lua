@@ -10,4 +10,7 @@ button.B         = 80  -- Key: P
 button.X         = 75  -- Key: K
 button.Y         = 79  -- Key: O
 
+button.SELECT    = 81  -- Key: Q
+button.START     = 69  -- Key: E
+
 return button

@@ -1,7 +1,8 @@
-**Bidi** is a tiny framework/fantasy console for developing small video games for
-learning and recreation. It takes heavy inspiration from
-[LÖVE](https://www.love2d.org/), [Pico8](https://www.lexaloffle.com/pico-8.php)
-and [Atari 2600](https://en.wikipedia.org/wiki/Atari_2600).
+**Bidi** is a lightweight framework and fantasy console designed for creating
+tiny video games, perfect for learning and having fun.  It takes heavy
+inspiration from [LÖVE](https://www.love2d.org/),
+[Pico8](https://www.lexaloffle.com/pico-8.php) and [Atari
+2600](https://en.wikipedia.org/wiki/Atari_2600).
 
 You develop your games in Lua and you are only allowed to have one Lua file
 where all your code lives. You can then load external assets like images and
@@ -91,6 +92,8 @@ close_window()
 | `button.B`         | `P`      | N/A  | N/A         | N/A      |
 | `button.X`         | `K`      | N/A  | N/A         | N/A      |
 | `button.Y`         | `O`      | N/A  | N/A         | N/A      |
+| `button.SELECT`    | `Q`      | N/A  | N/A         | N/A      |
+| `button.START`     | `E`      | N/A  | N/A         | N/A      |
                                                         
 ### Default colors
 

@@ -63,6 +63,14 @@ function test_buttons()
 		draw_text("Pad Right", 10, 100, 20, color.VIOLET)
 	end
 
+	if button_down(button.SELECT) then
+		draw_text("Select", 10, 130, 20, color.VIOLET)
+	end
+
+	if button_down(button.START) then
+		draw_text("Start", 10, 160, 20, color.VIOLET)
+	end
+
 	if button_down(button.A) then
 		draw_text("A", 150, 10, 20, color.VIOLET)
 	end
