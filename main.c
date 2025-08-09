@@ -19,6 +19,10 @@
 #define DEBUG_LEVEL LOG_DEBUG
 #define FONT_IMPORT_SIZE 30
 #define UID_LENGTH 36
+#define GAMEPAD_INDEX 0
+#define XBOX_ALIAS_1 "xbox"
+#define XBOX_ALIAS_2 "x-box"
+#define PS_ALIAS "playstation"
 
 typedef struct {
 	char uid[UID_LENGTH + 1];
@@ -302,14 +306,76 @@ static int l_draw_triangle(lua_State *L) {
 }
 
 static int l_button_down(lua_State *L) {
-	int button = luaL_checknumber(L, 1);
-	lua_pushboolean(L, IsKeyDown(button));
+	luaL_checktype(L, 1, LUA_TTABLE);
+	int keyboard = (int)lua_getfield_int(L, 1, "keyboard");
+	int xbox = (int)lua_getfield_int(L, 1, "xbox");
+	int playstation = (int)lua_getfield_int(L, 1, "playstation");
+	bool is_active = false;
+
+	// Check keyboard first.
+	if (IsKeyDown(keyboard)) {
+		is_active = true;
+	} else {
+		// FIXME: This does not work currently due to a bug in GLFW that Raylib
+		// is using. SDL could be used to compile Raylib but that doesn't
+		// statically link against SDL so it's not ideal.
+
+		// Check for controllers otherwise.
+		if (IsGamepadAvailable(GAMEPAD_INDEX)) {
+			// Xbox controller.
+			if (TextFindIndex(TextToLower(GetGamepadName(GAMEPAD_INDEX)), XBOX_ALIAS_1) > -1 || TextFindIndex(TextToLower(GetGamepadName(GAMEPAD_INDEX)), XBOX_ALIAS_2) > -1) {
+				if (IsGamepadButtonDown(GAMEPAD_INDEX, xbox)) {
+					is_active = true;
+				}
+			}
+
+			// Playstation controller.
+			if (TextFindIndex(TextToLower(GetGamepadName(GAMEPAD_INDEX)), PS_ALIAS) > -1) {
+				if (IsGamepadButtonDown(GAMEPAD_INDEX, playstation)) {
+					is_active = true;
+				}
+			}
+		}
+	}
+
+	lua_pushboolean(L, is_active);
 	return 1;
 }
 
 static int l_button_pressed(lua_State *L) {
-	int button = luaL_checknumber(L, 1);
-	lua_pushboolean(L, IsKeyPressed(button));
+	luaL_checktype(L, 1, LUA_TTABLE);
+	int keyboard = (int)lua_getfield_int(L, 1, "keyboard");
+	int xbox = (int)lua_getfield_int(L, 1, "xbox");
+	int playstation = (int)lua_getfield_int(L, 1, "playstation");
+	bool is_active = false;
+
+	// Check keyboard first.
+	if (IsKeyPressed(keyboard)) {
+		is_active = true;
+	} else {
+		// FIXME: This does not work currently due to a bug in GLFW that Raylib
+		// is using. SDL could be used to compile Raylib but that doesn't
+		// statically link against SDL so it's not ideal.
+
+		// Check for controllers otherwise.
+		if (IsGamepadAvailable(GAMEPAD_INDEX)) {
+			// Xbox controller.
+			if (TextFindIndex(TextToLower(GetGamepadName(GAMEPAD_INDEX)), XBOX_ALIAS_1) > -1 || TextFindIndex(TextToLower(GetGamepadName(GAMEPAD_INDEX)), XBOX_ALIAS_2) > -1) {
+				if (IsGamepadButtonPressed(GAMEPAD_INDEX, xbox)) {
+					is_active = true;
+				}
+			}
+
+			// Playstation controller.
+			if (TextFindIndex(TextToLower(GetGamepadName(GAMEPAD_INDEX)), PS_ALIAS) > -1) {
+				if (IsGamepadButtonPressed(GAMEPAD_INDEX, playstation)) {
+					is_active = true;
+				}
+			}
+		}
+	}
+
+	lua_pushboolean(L, is_active);
 	return 1;
 }
 

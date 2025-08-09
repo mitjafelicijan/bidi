@@ -136,6 +136,7 @@ close_window()
 ## Cool tools
 
 - https://hardwaretester.com/gamepad
+- https://www.raylib.com/examples/core/loader.html?name=core_input_gamepad
 
 ## Development references
 
