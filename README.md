@@ -27,20 +27,20 @@ sounds.
 | button.X         | K        | N/A  |             |          |
 | button.Y         | O        | N/A  |             |          |
 
-## Tools
-
-- https://hardwaretester.com/gamepad
-
-## Libraries
+## Libraries & Assets
 
 - https://github.com/rxi/microtar
 - https://github.com/lua/lua
 - https://github.com/raysan5/raylib
 - https://github.com/rxi/json.lua
+- https://dejavu-fonts.github.io/
 
-## Inspiration & Materials
+## Cool tools
+
+- https://hardwaretester.com/gamepad
+
+## Development references
 
 - https://www.love2d.org/wiki/Main_Page
 - https://www.lexaloffle.com/dl/docs/pico-8_manual.html
 - https://home.cs.colorado.edu/~main/bgi/doc/
-- https://opengameart.org/content/free-rpg-skill-icons-for-crafter-blacksmith-and-gnome
