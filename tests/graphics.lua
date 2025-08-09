@@ -31,44 +31,52 @@ end
 
 function test_buttons()
 	-- Testing button presses.
-	if button_pressed(button.PAD_UP) then
+	if button_down(button.PAD_UP) then
 		draw_text("Pad Up", 10, 10, 20, color.VIOLET)
 	end
 
-	if button_pressed(button.PAD_DOWN) then
+	if button_down(button.PAD_DOWN) then
 		draw_text("Pad Down", 10, 40, 20, color.VIOLET)
 	end
 
-	if button_pressed(button.PAD_LEFT) then
+	if button_down(button.PAD_LEFT) then
 		draw_text("Pad Left", 10, 70, 20, color.VIOLET)
 	end
 
-	if button_pressed(button.PAD_RIGHT) then
+	if button_down(button.PAD_RIGHT) then
 		draw_text("Pad Right", 10, 100, 20, color.VIOLET)
 	end
 	
-	if button_pressed(button.A) then
+	if button_down(button.A) then
 		draw_text("A", 150, 10, 20, color.VIOLET)
 	end
 
-	if button_pressed(button.B) then
+	if button_down(button.B) then
 		draw_text("B", 150, 40, 20, color.VIOLET)
 	end
 
-	if button_pressed(button.X) then
+	if button_down(button.X) then
 		draw_text("X", 150, 70, 20, color.VIOLET)
 	end
 
-	if button_pressed(button.Y) then
+	if button_down(button.Y) then
 		draw_text("Y", 150, 100, 20, color.VIOLET)
 	end
 
-	-- Moving square left and right.
-	if button_pressed(button.PAD_LEFT) then
+	-- Moving square around.
+	if button_down(button.PAD_UP) then
+		test_button_square.y = test_button_square.y - (test_button_speed * get_dt())
+	end
+
+	if button_down(button.PAD_DOWN) then
+		test_button_square.y = test_button_square.y + (test_button_speed * get_dt())
+	end
+
+	if button_down(button.PAD_LEFT) then
 		test_button_square.x = test_button_square.x - (test_button_speed * get_dt())
 	end
 
-	if button_pressed(button.PAD_RIGHT) then
+	if button_down(button.PAD_RIGHT) then
 		test_button_square.x = test_button_square.x + (test_button_speed * get_dt())
 	end
 
@@ -84,7 +92,7 @@ while window_running() do
 	clear_window(color.BLACK)
 
 	-- test_api()
-	-- test_buttons()
+	test_buttons()
 
 	draw_info()
 	end_drawing()

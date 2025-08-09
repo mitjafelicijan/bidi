@@ -271,9 +271,15 @@ static int l_draw_triangle(lua_State *L) {
 	return 0;
 }
 
-static int l_button_pressed(lua_State *L) {
+static int l_button_down(lua_State *L) {
 	int button = luaL_checknumber(L, 1);
 	lua_pushboolean(L, IsKeyDown(button));
+	return 1;
+}
+
+static int l_button_pressed(lua_State *L) {
+	int button = luaL_checknumber(L, 1);
+	lua_pushboolean(L, IsKeyPressed(button));
 	return 1;
 }
 
@@ -310,9 +316,9 @@ int main(int argc, char *argv[]) {
 	TraceLogLevel debug_level = LOG_WARNING;
 	const char *run_file = NULL;
 
-	const char short_options[] = "r:dbhv";
+	const char short_options[] = "f:dbhv";
 	const struct option long_options[] = {
-		{ "run", 1, NULL, 'r' },
+		{ "file", 1, NULL, 'r' },
 		{ "debug", 0, NULL, 'd' },
 		{ "bundle", 0, NULL, 'b' },
 		{ "help", 0, NULL, 'h' },
@@ -323,7 +329,7 @@ int main(int argc, char *argv[]) {
 	int opt;
 	while ((opt = getopt_long(argc, argv, short_options, long_options, NULL)) != -1) {
 		switch (opt) {
-			case 'r':
+			case 'f':
 				run_file = optarg;
 				break;
 			case 'b':
@@ -377,6 +383,7 @@ int main(int argc, char *argv[]) {
 		lua_register(L, "load_image", l_load_image);
 		lua_register(L, "load_audio", l_load_audio);
 		lua_register(L, "move_camera", l_move_camera);
+		lua_register(L, "button_down", l_button_down);
 		lua_register(L, "button_pressed", l_button_pressed);
 
 		// Interpreting and running input file Lua script.
