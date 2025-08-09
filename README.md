@@ -17,10 +17,17 @@ sounds.
 
 ## Controller mappings
 
-```
-  Q W E      I O
-  A S D      J k
-```
+
+| Button           | Keyboard | Xbox | Playstation | Nintendo |
+|------------------|----------|------|-------------|----------|
+| button.PAD_UP    | W        | N/A  |             |          |
+| button.PAD_DOWN  | S        | N/A  |             |          |
+| button.PAD_LEFT  | A        | N/A  |             |          |
+| button.PAD_RIGHT | D        | N/A  |             |          |
+| button.A         | L        | N/A  |             |          |
+| button.B         | P        | N/A  |             |          |
+| button.X         | K        | N/A  |             |          |
+| button.Y         | O        | N/A  |             |          |
 
 ## Tools
 
