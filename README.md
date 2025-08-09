@@ -81,16 +81,16 @@ close_window()
 
 ### Controller mappings
 
-| Button           | Keyboard | Xbox | Playstation | Nintendo |
-| ---------------- | -------- | ---- | ----------- | -------- |
-| button.PAD_UP    | W        | N/A  | N/A         | N/A      |
-| button.PAD_DOWN  | S        | N/A  | N/A         | N/A      |
-| button.PAD_LEFT  | A        | N/A  | N/A         | N/A      |
-| button.PAD_RIGHT | D        | N/A  | N/A         | N/A      |
-| button.A         | L        | N/A  | N/A         | N/A      |
-| button.B         | P        | N/A  | N/A         | N/A      |
-| button.X         | K        | N/A  | N/A         | N/A      |
-| button.Y         | O        | N/A  | N/A         | N/A      |
+| Button             | Keyboard | Xbox | Playstation | Nintendo |
+| ------------------ | -------- | ---- | ----------- | -------- |
+| `button.PAD_UP`    | `W`      | N/A  | N/A         | N/A      |
+| `button.PAD_DOWN`  | `S`      | N/A  | N/A         | N/A      |
+| `button.PAD_LEFT`  | `A`      | N/A  | N/A         | N/A      |
+| `button.PAD_RIGHT` | `D`      | N/A  | N/A         | N/A      |
+| `button.A`         | `L`      | N/A  | N/A         | N/A      |
+| `button.B`         | `P`      | N/A  | N/A         | N/A      |
+| `button.X`         | `K`      | N/A  | N/A         | N/A      |
+| `button.Y`         | `O`      | N/A  | N/A         | N/A      |
                                                         
 ### Default colors
 
