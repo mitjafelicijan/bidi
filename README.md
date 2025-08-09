@@ -19,32 +19,32 @@ sounds.
 
 | Function            | Description | Arguments | Returns |
 |---------------------|-------------|-----------|---------|
-| open_window         |             |           |         |
-| close_window        |             |           |         |
-| window_running      |             |           | bool    |
-| start_drawing       |             |           |         |
-| stop_drawing        |             |           |         |
-| clear_window        |             |           |         |
-| start_camera        |             |           |         |
-| stop_camera         |             |           |         |
-| move_camera         |             |           |         |
-| set_fps             |             |           |         |
-| get_fps             |             |           | number  |
-| get_dt              |             |           | number  |
-| get_width           |             |           | number  |
-| get_height          |             |           | number  |
-| draw_info           |             |           |         |
-| draw_rect           |             |           |         |
-| draw_text           |             |           |         |
-| draw_pixel          |             |           |         |
-| draw_line           |             |           |         |
-| draw_circle         |             |           |         |
-| draw_ellipse        |             |           |         |
-| draw_triangle       |             |           |         |
-| load_image          |             |           |         |
-| load_audio          |             |           |         |
-| button_down         |             |           | bool    |
-| button_pressed      |             |           | bool    |
+| `open_window`       |             |           |         |
+| `close_window`      |             |           |         |
+| `window_running`    |             |           | bool    |
+| `start_drawing`     |             |           |         |
+| `stop_drawing`      |             |           |         |
+| `clear_window`      |             |           |         |
+| `start_camera`      |             |           |         |
+| `stop_camera`       |             |           |         |
+| `move_camera`       |             |           |         |
+| `set_fps`           |             |           |         |
+| `get_fps`           |             |           | number  |
+| `get_dt`            |             |           | number  |
+| `get_width`         |             |           | number  |
+| `get_height`        |             |           | number  |
+| `draw_info`         |             |           |         |
+| `draw_rect`         |             |           |         |
+| `draw_text`         |             |           |         |
+| `draw_pixel`        |             |           |         |
+| `draw_line`         |             |           |         |
+| `draw_circle`       |             |           |         |
+| `draw_ellipse`      |             |           |         |
+| `draw_triangle`     |             |           |         |
+| `load_image`        |             |           |         |
+| `load_audio`        |             |           |         |
+| `button_down`       |             |           | bool    |
+| `button_pressed`    |             |           | bool    |
 
 ### Controller mappings
 
