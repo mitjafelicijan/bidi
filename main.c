@@ -2,6 +2,7 @@
 #include <stdarg.h>
 #include <getopt.h>
 #include <stdlib.h>
+#include <time.h>
 
 #include "raylib.h"
 #include "lua.h"
@@ -10,6 +11,7 @@
 
 #include "stdlib/json.h"
 #include "stdlib/color.h"
+#include "stdlib/button.h"
 #include "stdlib/tilemap.h"
 
 #include "fonts/dejavusans_mono_bold.h"
@@ -17,14 +19,34 @@
 #define VERSION "x.x"
 #define DEBUG_LEVEL LOG_DEBUG
 #define FONT_IMPORT_SIZE 30
+#define UID_LENGTH 36
+
+typedef struct {
+	char uid[UID_LENGTH + 1];
+	const char* filepath;
+} ExternalImage;
+
+typedef struct {
+} ExternalAudio;
 
 typedef struct {
 	Font font;
 	int font_size;
+	Camera2D camera;
+	ExternalImage *images;
+	ExternalAudio *audio;
 } Context;
 
 // Setting up global context.
 Context ctx = {0};
+
+static void generate_uid(char *uid) {
+	const char *chars = "0123456789abcdef";
+	for (size_t i = 0; i < UID_LENGTH; i++) {
+		uid[i] = chars[rand() % 16];
+	}
+	uid[UID_LENGTH + 1] = '\0';
+}
 
 static int lua_getfield_int(lua_State *L, int index, const char *key) {
 	lua_getfield(L, index, key);
@@ -249,6 +271,24 @@ static int l_draw_triangle(lua_State *L) {
 	return 0;
 }
 
+static int l_button_pressed(lua_State *L) {
+	int button = luaL_checknumber(L, 1);
+	lua_pushboolean(L, IsKeyDown(button));
+	return 1;
+}
+
+static int l_load_image(lua_State *L) {
+	return 0;
+}
+
+static int l_load_audio(lua_State *L) {
+	return 0;
+}
+
+static int l_move_camera(lua_State *L) {
+	return 0;
+}
+
 static void help(const char *argv0) {
 	printf("Usage: %s [options]\n"
 			"\nAvailable options:\n"
@@ -265,6 +305,8 @@ static void version(const char *argv0) {
 }
 
 int main(int argc, char *argv[]) {
+	srand(time(NULL));
+
 	TraceLogLevel debug_level = LOG_WARNING;
 	const char *run_file = NULL;
 
@@ -308,6 +350,12 @@ int main(int argc, char *argv[]) {
 		lua_State *L = luaL_newstate();
 		luaL_openlibs(L);
 
+		// Loading embeded modules into Lua state.
+		if (!load_embedded_module(L, json, json_len, "json")) return 1;
+		if (!load_embedded_module(L, color, color_len, "color")) return 1;
+		if (!load_embedded_module(L, button, button_len, "button")) return 1;
+		if (!load_embedded_module(L, tilemap, tilemap_len, "tilemap")) return 1;
+
 		// Registring Raylib mappings.
 		lua_register(L, "open_window", l_open_window);
 		lua_register(L, "close_window", l_close_window);
@@ -326,11 +374,10 @@ int main(int argc, char *argv[]) {
 		lua_register(L, "draw_circle", l_draw_circle);
 		lua_register(L, "draw_ellipse", l_draw_ellipse);
 		lua_register(L, "draw_triangle", l_draw_triangle);
-
-		// Loading embeded modules into Lua state.
-		if (!load_embedded_module(L, json, json_len, "json")) return 1;
-		if (!load_embedded_module(L, color, color_len, "color")) return 1;
-		if (!load_embedded_module(L, tilemap, tilemap_len, "tilemap")) return 1;
+		lua_register(L, "load_image", l_load_image);
+		lua_register(L, "load_audio", l_load_audio);
+		lua_register(L, "move_camera", l_move_camera);
+		lua_register(L, "button_pressed", l_button_pressed);
 
 		// Interpreting and running input file Lua script.
 		if (luaL_loadfile(L, run_file) || lua_pcall(L, 0, 0, 0)) {

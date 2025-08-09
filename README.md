@@ -15,6 +15,17 @@ sounds.
 > download and replace them from official repositories if desired; they have
 > not been tampered with.
 
+## Controller mappings
+
+```
+  Q W E      I O
+  A S D      J k
+```
+
+## Tools
+
+- https://hardwaretester.com/gamepad
+
 ## Libraries
 
 - https://github.com/rxi/microtar
@@ -27,3 +38,4 @@ sounds.
 - https://www.love2d.org/wiki/Main_Page
 - https://www.lexaloffle.com/dl/docs/pico-8_manual.html
 - https://home.cs.colorado.edu/~main/bgi/doc/
+- https://opengameart.org/content/free-rpg-skill-icons-for-crafter-blacksmith-and-gnome
