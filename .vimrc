@@ -2,7 +2,7 @@ set makeprg=make
 set errorformat=%f:%l:%c:\ %m
 
 let g:gdb_executable = 'bidi'
-let g:gdb_arguments = '-f tests/graphics.lua'
+let g:gdb_arguments = '-f tests/test.lua'
 
 nnoremap <leader>m :call LocalMake()<CR>
 nnoremap <leader>r :execute '!./' . g:gdb_executable . ' ' . g:gdb_arguments<CR>

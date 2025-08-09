@@ -32,6 +32,19 @@ function get_random_color()
     return color[randomKey]  -- Return the corresponding color
 end
 
+function test_json()
+	local file = io.open("tests/test.json", "r")
+	local content = file:read("*a")
+	file:close()
+
+	local data = json.decode(content)
+
+	print("name: " .. data.name)
+	for _, n in pairs(data.numbers) do
+		print(" - number: " .. n)
+	end
+end
+
 function test_buttons()
 	-- Testing button presses.
 	if button_down(button.PAD_UP) then
@@ -110,6 +123,8 @@ function test_camera()
 	-- Using camera
 	move_camera(test_camera_position.x, test_camera_position.y)
 
+	draw_rect(100, 100, 300, 200, color.BLUE)
+
 	start_camera()
 	draw_rect(0, 0, 300, 200, color.YELLOW)
 	stop_camera()
@@ -121,6 +136,7 @@ while window_running() do
 	start_drawing()
 	clear_window(color.BLACK)
 
+	-- test_json()
 	-- test_api()
 	-- test_buttons()
 	-- test_camera()
