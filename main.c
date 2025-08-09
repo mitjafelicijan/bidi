@@ -77,15 +77,19 @@ static int l_open_window(lua_State *L) {
 	const char *title = luaL_checkstring(L, 3);
 	SetConfigFlags(FLAG_WINDOW_RESIZABLE | FLAG_VSYNC_HINT | FLAG_WINDOW_HIGHDPI);
 	InitWindow(width, height, title);
-	TraceLog(LOG_DEBUG, "l_open_window");
 
 	ctx.font_size = FONT_IMPORT_SIZE;
 	ctx.font = LoadFontFromMemory(".ttf", dejavusans_mono_bold, dejavusans_mono_bold_len, ctx.font_size, NULL, 0);
 	SetTextureFilter(ctx.font.texture, TEXTURE_FILTER_TRILINEAR);
 
 	if (!IsFontValid(ctx.font)) {
-		printf("font not valid\n");
+		TraceLog(LOG_DEBUG, "Font not valid.");
 	}
+
+	ctx.camera.target = (Vector2){ 0.0f, 0.0f };
+	ctx.camera.offset = (Vector2){ GetScreenHeight()/2.0f, GetScreenHeight()/2.0f };
+	ctx.camera.rotation = 0.0f;
+	ctx.camera.zoom = 1.0f;
 
 	return 0;
 }
@@ -99,7 +103,6 @@ static int l_window_running(lua_State *L) {
 static int l_set_fps(lua_State *L) {
 	int fps = luaL_checknumber(L, 1);
 	SetTargetFPS(fps);
-	TraceLog(LOG_DEBUG, "l_set_fps");
 	return 0;
 }
 
@@ -113,19 +116,47 @@ static int l_get_fps(lua_State *L) {
 	return 1;
 }
 
+static int l_get_width(lua_State *L) {
+	lua_pushnumber(L, GetScreenWidth());
+	return 1;
+}
+
+static int l_get_height(lua_State *L) {
+	lua_pushnumber(L, GetScreenHeight());
+	return 1;
+}
+
 static int l_close_window(lua_State *L) {
 	CloseWindow();
-	TraceLog(LOG_DEBUG, "l_close_window");
 	return 0;
 }
 
-static int l_begin_drawing(lua_State *L) {
+static int l_start_drawing(lua_State *L) {
 	BeginDrawing();
 	return 0;
 }
 
-static int l_end_drawing(lua_State *L) {
+static int l_stop_drawing(lua_State *L) {
 	EndDrawing();
+	return 0;
+}
+
+static int l_start_camera(lua_State *L) {
+	BeginMode2D(ctx.camera);
+	return 0;
+}
+
+static int l_stop_camera(lua_State *L) {
+	EndMode2D();
+	return 0;
+}
+
+static int l_move_camera(lua_State *L) {
+	int x = luaL_checknumber(L, 1);
+	int y = luaL_checknumber(L, 2);
+
+	ctx.camera.target.x = x;
+	ctx.camera.target.y = y;
 	return 0;
 }
 
@@ -291,10 +322,6 @@ static int l_load_audio(lua_State *L) {
 	return 0;
 }
 
-static int l_move_camera(lua_State *L) {
-	return 0;
-}
-
 static void help(const char *argv0) {
 	printf("Usage: %s [options]\n"
 			"\nAvailable options:\n"
@@ -366,12 +393,21 @@ int main(int argc, char *argv[]) {
 		lua_register(L, "open_window", l_open_window);
 		lua_register(L, "close_window", l_close_window);
 		lua_register(L, "window_running", l_window_running);
-		lua_register(L, "begin_drawing", l_begin_drawing);
-		lua_register(L, "end_drawing", l_end_drawing);
+
+		lua_register(L, "start_drawing", l_start_drawing);
+		lua_register(L, "stop_drawing", l_stop_drawing);
+		lua_register(L, "clear_window", l_clear_window);
+		
+		lua_register(L, "start_camera", l_start_camera);
+		lua_register(L, "stop_camera", l_stop_camera);
+		lua_register(L, "move_camera", l_move_camera);
+		
 		lua_register(L, "set_fps", l_set_fps);
 		lua_register(L, "get_fps", l_get_fps);
 		lua_register(L, "get_dt", l_get_dt);
-		lua_register(L, "clear_window", l_clear_window);
+		lua_register(L, "get_width", l_get_width);
+		lua_register(L, "get_height", l_get_height);
+		
 		lua_register(L, "draw_info", l_draw_info);
 		lua_register(L, "draw_rect", l_draw_rect);
 		lua_register(L, "draw_text", l_draw_text);
@@ -380,9 +416,10 @@ int main(int argc, char *argv[]) {
 		lua_register(L, "draw_circle", l_draw_circle);
 		lua_register(L, "draw_ellipse", l_draw_ellipse);
 		lua_register(L, "draw_triangle", l_draw_triangle);
+		
 		lua_register(L, "load_image", l_load_image);
 		lua_register(L, "load_audio", l_load_audio);
-		lua_register(L, "move_camera", l_move_camera);
+		
 		lua_register(L, "button_down", l_button_down);
 		lua_register(L, "button_pressed", l_button_pressed);
 

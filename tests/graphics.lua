@@ -4,6 +4,9 @@ test_button_square = { x = 400, y = 400 }
 test_button_color = color.RED
 test_button_speed = 200
 
+test_camera_position = { x = 0, y = 0 }
+test_camera_speed = 200
+
 test_images_asset1 = load_image("tests/icons/icon_1.png")
 
 open_window(800, 800, "Sample Window")
@@ -87,15 +90,43 @@ function test_buttons()
 	draw_rect(test_button_square.x, test_button_square.y, 50, 50, test_button_color)
 end
 
+function test_camera()
+	if button_down(button.PAD_UP) then
+		test_camera_position.y = test_camera_position.y - (test_camera_speed * get_dt())
+	end
+
+	if button_down(button.PAD_DOWN) then
+		test_camera_position.y = test_camera_position.y + (test_camera_speed * get_dt())
+	end
+
+	if button_down(button.PAD_LEFT) then
+		test_camera_position.x = test_camera_position.x - (test_camera_speed * get_dt())
+	end
+
+	if button_down(button.PAD_RIGHT) then
+		test_camera_position.x = test_camera_position.x + (test_camera_speed * get_dt())
+	end
+
+	-- Using camera
+	move_camera(test_camera_position.x, test_camera_position.y)
+
+	start_camera()
+	draw_rect(0, 0, 300, 200, color.YELLOW)
+	stop_camera()
+
+	draw_text("This text doesn't move!", 10, 10, 20, color.VIOLET)
+end
+
 while window_running() do
-	begin_drawing()
+	start_drawing()
 	clear_window(color.BLACK)
 
 	-- test_api()
-	test_buttons()
+	-- test_buttons()
+	-- test_camera()
 
 	draw_info()
-	end_drawing()
+	stop_drawing()
 end
 
 close_window()
