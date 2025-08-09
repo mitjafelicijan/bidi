@@ -1,9 +1,7 @@
-# Bidi - Game development framework
-
-Bidi is a tiny framework for developing small video games for recreational
-purpose. It takes heavy inspiration from [LÖVE](https://www.love2d.org/),
-[Pico8](https://www.lexaloffle.com/pico-8.php) and
-[Atari 2600](https://en.wikipedia.org/wiki/Atari_2600).
+**Bidi** is a tiny framework/fantasy console for developing small video games for
+learning and recreation. It takes heavy inspiration from
+[LÖVE](https://www.love2d.org/), [Pico8](https://www.lexaloffle.com/pico-8.php)
+and [Atari 2600](https://en.wikipedia.org/wiki/Atari_2600).
 
 You develop your games in Lua and you are only allowed to have one Lua file
 where all your code lives. You can then load external assets like images and
