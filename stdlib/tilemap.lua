@@ -1,3 +1,0 @@
-local tilemap = {}
-
-return tilemap
