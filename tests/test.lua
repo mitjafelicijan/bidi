@@ -24,12 +24,12 @@ function test_api()
 end
 
 function get_random_color()
-    local keys = {}
-    for k in pairs(color) do
-        table.insert(keys, k)  -- Collect all keys
-    end
-    local randomKey = keys[math.random(1, #keys)]  -- Select a random key
-    return color[randomKey]  -- Return the corresponding color
+	local keys = {}
+	for k in pairs(color) do
+		table.insert(keys, k)  -- Collect all keys
+	end
+	local randomKey = keys[math.random(1, #keys)]  -- Select a random key
+	return color[randomKey]  -- Return the corresponding color
 end
 
 function test_json()
@@ -62,7 +62,7 @@ function test_buttons()
 	if button_down(button.PAD_RIGHT) then
 		draw_text("Pad Right", 10, 100, 20, color.VIOLET)
 	end
-	
+
 	if button_down(button.A) then
 		draw_text("A", 150, 10, 20, color.VIOLET)
 	end
