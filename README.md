@@ -84,10 +84,10 @@ close_window()
 
 | Button             | Keyboard | Xbox          | Playstation   |
 | ------------------ | -------- | ------------- | ------------- |
-| `button.PAD_UP`    | `W`      | `D-pad Up`    | `D-PAD UP`    |
-| `button.PAD_DOWN`  | `S`      | `D-pad Down`  | `D-PAD DOWN`  |
-| `button.PAD_LEFT`  | `A`      | `D-pad Left`  | `D-PAD LEFT`  |
-| `button.PAD_RIGHT` | `D`      | `D-pad Right` | `D-PAD RIGHT` |
+| `button.PAD_UP`    | `W`      | `D-pad Up`    | `D-pad Up`    |
+| `button.PAD_DOWN`  | `S`      | `D-pad Down`  | `D-pad Down`  |
+| `button.PAD_LEFT`  | `A`      | `D-pad Left`  | `D-pad Left`  |
+| `button.PAD_RIGHT` | `D`      | `D-pad Right` | `D-pad Right` |
 | `button.A`         | `L`      | `A`           | `Cross`       |
 | `button.B`         | `P`      | `B`           | `Circle`      |
 | `button.X`         | `K`      | `X`           | `Square`      |
