@@ -528,7 +528,7 @@ static int l_stop_sound(lua_State *L) {
 static void help(const char *argv0) {
 	printf("Usage: %s [options]\n"
 			"\nAvailable options:\n"
-			"  -r,--run=file.lua       run input file\n"
+			"  -f,--file=file.lua       run input file\n"
 			"  -b,--bundle             bundles this folder\n"
 			"  -d,--debug              prints debug information\n"
 			"  -h,--help               this help\n"
@@ -550,7 +550,7 @@ int main(int argc, char *argv[]) {
 
 	const char short_options[] = "f:dbhv";
 	const struct option long_options[] = {
-		{ "file", 1, NULL, 'r' },
+		{ "file", 1, NULL, 'f' },
 		{ "debug", 0, NULL, 'd' },
 		{ "bundle", 0, NULL, 'b' },
 		{ "help", 0, NULL, 'h' },

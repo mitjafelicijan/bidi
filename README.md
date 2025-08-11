@@ -138,6 +138,36 @@ close_window()
 | `color.BLANK`      | 0       | 0         | 0        | 0         |
 | `color.MAGENTA`    | 255     | 0         | 255      | 255       |
 
+#### Using custom colors
+
+Color is essentially a structure with RGBA data. So constructing new colors is
+very easy.
+
+Alpha channel can be omitted and will by default be 255.
+
+```lua
+-- my_game.lua
+
+open_window(800, 800, "My Game")
+set_fps(60)
+
+my_color1 = { r = 200, g = 200, b = 200, a = 255 }
+my_color2 = { r = 200, g = 200, b = 200 }
+
+while window_running() do
+    start_drawing()
+    clear_window(color.BLACK)
+
+    draw_rect(100, 100, 100, 100, my_color1)
+    draw_rect(300, 100, 100, 100, my_color2)
+
+    draw_info()
+    stop_drawing()
+end
+
+close_window()
+```
+
 ## Libraries & Assets
 
 - https://github.com/rxi/microtar
