@@ -215,9 +215,10 @@ static int l_draw_info(lua_State *L) {
 	double runtime = GetTime();
 	int height = GetScreenHeight();
 
+	DrawRectangle(10, GetScreenHeight() - 90, 160, 80, DARKBLUE);
 	DrawTextEx(ctx.font, TextFormat("fps: %d", fps), (Vector2){ 20, height - 80 }, 20, 0, RAYWHITE);
-	DrawTextEx(ctx.font, TextFormat("run: %f", runtime), (Vector2){ 20, height - 60 }, 20, 0, RAYWHITE);
-	DrawTextEx(ctx.font, TextFormat("dt: %f", delta), (Vector2){ 20, height - 40 }, 20, 0, RAYWHITE);
+	DrawTextEx(ctx.font, TextFormat("run: %.4f", runtime), (Vector2){ 20, height - 60 }, 20, 0, RAYWHITE);
+	DrawTextEx(ctx.font, TextFormat("dt: %.4f", delta), (Vector2){ 20, height - 40 }, 20, 0, RAYWHITE);
 
 	return 0;
 }
@@ -528,7 +529,7 @@ static int l_stop_sound(lua_State *L) {
 static void help(const char *argv0) {
 	printf("Usage: %s [options]\n"
 			"\nAvailable options:\n"
-			"  -f,--file=file.lua       run input file\n"
+			"  -f,--file=file.lua      run input file\n"
 			"  -b,--bundle             bundles this folder\n"
 			"  -d,--debug              prints debug information\n"
 			"  -h,--help               this help\n"
