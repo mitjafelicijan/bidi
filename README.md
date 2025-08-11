@@ -1,5 +1,5 @@
-**Bidi** is a lightweight framework and fantasy console designed for creating
-tiny video games, perfect for learning and having fun.  It takes heavy
+**Bidi** is a lightweight framework and/or fantasy console designed for
+creating tiny video games, perfect for learning and having fun. It takes heavy
 inspiration from [LÖVE](https://www.love2d.org/),
 [Pico8](https://www.lexaloffle.com/pico-8.php), [Atari
 2600](https://en.wikipedia.org/wiki/Atari_2600) and [Windows
