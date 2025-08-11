@@ -84,6 +84,30 @@ void init_sound_list(SoundList *list) {
 	list->count = 0;
 }
 
+void free_image_list(ImageList *list) {
+	ExternalImage *curr = list->head;
+	while (curr) {
+		ExternalImage *next = curr->next;
+		UnloadTexture(curr->texture);
+		free(curr);
+		curr = next;
+	}
+	list->head = list->tail = NULL;
+	list->count = 0;
+}
+
+void free_sound_list(SoundList *list) {
+	ExternalSound *curr = list->head;
+	while (curr) {
+		ExternalSound *next = curr->next;
+		UnloadSound(curr->sound);
+		free(curr);
+		curr = next;
+	}
+	list->head = list->tail = NULL;
+	list->count = 0;
+}
+
 static int lua_getfield_int(lua_State *L, int index, const char *key) {
 	lua_getfield(L, index, key);
 	int val = (int)luaL_checknumber(L, -1);
@@ -129,10 +153,22 @@ static int l_open_window(lua_State *L) {
 
 	InitAudioDevice();
 
+	init_image_list(&ctx.images);
+	init_sound_list(&ctx.sounds);
+
 	return 0;
 }
 
-// TODO: This function name is still a bit sus. Revisit the name later.
+static int l_close_window(lua_State *L) {
+	free_image_list(&ctx.images);
+	free_sound_list(&ctx.sounds);
+	UnloadFont(ctx.font);
+	CloseAudioDevice();
+	CloseWindow();
+	return 0;
+}
+
+// XXX: This function name is still a bit sus. Revisit the name later.
 static int l_window_running(lua_State *L) {
 	lua_pushboolean(L, !WindowShouldClose());
 	return 1;
@@ -162,11 +198,6 @@ static int l_get_width(lua_State *L) {
 static int l_get_height(lua_State *L) {
 	lua_pushnumber(L, GetScreenHeight());
 	return 1;
-}
-
-static int l_close_window(lua_State *L) {
-	CloseWindow();
-	return 0;
 }
 
 static int l_start_drawing(lua_State *L) {
@@ -544,8 +575,6 @@ static void version(const char *argv0) {
 
 int main(int argc, char *argv[]) {
 	srand(time(NULL));
-	init_image_list(&ctx.images);
-	init_sound_list(&ctx.sounds);
 
 	TraceLogLevel debug_level = LOG_WARNING;
 	const char *run_file = NULL;
@@ -626,7 +655,7 @@ int main(int argc, char *argv[]) {
 		lua_register(L, "draw_circle", l_draw_circle);
 		lua_register(L, "draw_ellipse", l_draw_ellipse);
 		lua_register(L, "draw_triangle", l_draw_triangle);
-		
+
 		lua_register(L, "load_image", l_load_image);
 		lua_register(L, "draw_image", l_draw_image);
 
@@ -640,7 +669,6 @@ int main(int argc, char *argv[]) {
 			return 1;
 		}
 
-		UnloadFont(ctx.font);
 		lua_close(L);
 	}
 
