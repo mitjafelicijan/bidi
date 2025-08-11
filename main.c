@@ -19,7 +19,7 @@
 #define VERSION "x.x"
 #define DEBUG_LEVEL LOG_DEBUG
 #define FONT_IMPORT_SIZE 30
-#define UID_LENGTH 36
+#define UID_LENGTH 64
 #define GAMEPAD_INDEX 0
 #define XBOX_ALIAS_1 "xbox"
 #define XBOX_ALIAS_2 "x-box"
@@ -37,11 +37,24 @@ typedef struct {
 	int count;
 } ImageList;
 
+typedef struct ExternalSound {
+	char uid[UID_LENGTH + 1];
+	Sound sound;
+	struct ExternalSound *next;
+} ExternalSound;
+
+typedef struct {
+	ExternalSound *head;
+	ExternalSound *tail;
+	int count;
+} SoundList;
+
 typedef struct {
 	Font font;
 	int font_size;
 	Camera2D camera;
 	ImageList images;
+	SoundList sounds;
 } Context;
 
 // Setting up global context.
@@ -59,6 +72,12 @@ static void generate_uid(char *str, size_t length) {
 }
 
 void init_image_list(ImageList *list) {
+	list->head = NULL;
+	list->tail = NULL;
+	list->count = 0;
+}
+
+void init_sound_list(SoundList *list) {
 	list->head = NULL;
 	list->tail = NULL;
 	list->count = 0;
@@ -106,6 +125,8 @@ static int l_open_window(lua_State *L) {
 	ctx.camera.offset = (Vector2){ GetScreenHeight()/2.0f, GetScreenHeight()/2.0f };
 	ctx.camera.rotation = 0.0f;
 	ctx.camera.zoom = 1.0f;
+
+	InitAudioDevice();
 
 	return 0;
 }
@@ -423,14 +444,10 @@ static int l_load_image(lua_State *L) {
 	}
 	ctx.images.count++;
 
-	TraceLog(LOG_WARNING, "[adding]\t %s (%d)", img->uid, strlen(img->uid));
+	TraceLog(LOG_WARNING, "[add_img] %s (%d)", img->uid, strlen(img->uid));
 
 	lua_pushstring(L, img->uid);
 	return 1;
-}
-
-static int l_load_audio(lua_State *L) {
-	return 0;
 }
 
 static int l_draw_image(lua_State *L) {
@@ -441,8 +458,65 @@ static int l_draw_image(lua_State *L) {
 	ExternalImage *current = ctx.images.head;
 	while (current) {
 		if (strncmp(current->uid, uid, UID_LENGTH) == 0) {
-			/* TraceLog(LOG_WARNING, "[match]\t %s (%d)", uid, strlen(uid)); */
 			DrawTexture(current->texture, x, y, WHITE);
+			break;
+		}
+		current = current->next;
+	}
+
+	return 0;
+}
+
+static int l_load_sound(lua_State *L) {
+	const char *filepath = luaL_checkstring(L, 1);
+
+	ExternalSound *snd = malloc(sizeof(ExternalSound));
+	if (!snd) {
+		TraceLog(LOG_FATAL, "Out of memory!");
+		return 0;
+	}
+
+	snd->sound = LoadSound(filepath);
+	generate_uid(snd->uid, UID_LENGTH);
+	snd->next = NULL;
+
+	if (ctx.sounds.tail) {
+		ctx.sounds.tail->next = snd;
+		ctx.sounds.tail = snd;
+	} else {
+		ctx.sounds.head = snd;
+		ctx.sounds.tail = snd;
+	}
+	ctx.sounds.count++;
+
+	TraceLog(LOG_WARNING, "[add_snd] %s (%d)", snd->uid, strlen(snd->uid));
+
+	lua_pushstring(L, snd->uid);
+	return 1;
+}
+
+static int l_play_sound(lua_State *L) {
+	const char *uid = luaL_checkstring(L, 1);
+
+	ExternalSound *current = ctx.sounds.head;
+	while (current) {
+		if (strncmp(current->uid, uid, UID_LENGTH) == 0) {
+			PlaySound(current->sound);
+			break;
+		}
+		current = current->next;
+	}
+
+	return 0;
+}
+
+static int l_stop_sound(lua_State *L) {
+	const char *uid = luaL_checkstring(L, 1);
+
+	ExternalSound *current = ctx.sounds.head;
+	while (current) {
+		if (strncmp(current->uid, uid, UID_LENGTH) == 0) {
+			StopSound(current->sound);
 			break;
 		}
 		current = current->next;
@@ -469,6 +543,7 @@ static void version(const char *argv0) {
 int main(int argc, char *argv[]) {
 	srand(time(NULL));
 	init_image_list(&ctx.images);
+	init_sound_list(&ctx.sounds);
 
 	TraceLogLevel debug_level = LOG_WARNING;
 	const char *run_file = NULL;
@@ -537,9 +612,6 @@ int main(int argc, char *argv[]) {
 		lua_register(L, "get_width", l_get_width);
 		lua_register(L, "get_height", l_get_height);
 
-		lua_register(L, "load_image", l_load_image);
-		lua_register(L, "load_audio", l_load_audio);
-
 		lua_register(L, "button_down", l_button_down);
 		lua_register(L, "button_pressed", l_button_pressed);
 
@@ -551,7 +623,13 @@ int main(int argc, char *argv[]) {
 		lua_register(L, "draw_circle", l_draw_circle);
 		lua_register(L, "draw_ellipse", l_draw_ellipse);
 		lua_register(L, "draw_triangle", l_draw_triangle);
+		
+		lua_register(L, "load_image", l_load_image);
 		lua_register(L, "draw_image", l_draw_image);
+
+		lua_register(L, "load_sound", l_load_sound);
+		lua_register(L, "play_sound", l_play_sound);
+		lua_register(L, "stop_sound", l_play_sound);
 
 		// Interpreting and running input file Lua script.
 		if (luaL_loadfile(L, run_file) || lua_pcall(L, 0, 0, 0)) {

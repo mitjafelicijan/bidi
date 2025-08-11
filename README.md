@@ -27,6 +27,7 @@ open_window(800, 800, "My Game")
 set_fps(60)
 
 axe_image = load_image("images/axe.png")
+slash_effect = load_sound("sounds/slash.wav")
 
 while window_running() do
     start_drawing()
@@ -43,6 +44,10 @@ while window_running() do
 
 	if button_down(button.PAD_UP) then
 		draw_text("Pad Up", 10, 10, 20, color.VIOLET)
+	end
+
+	if button_pressed(button.A) then
+        play_sound(slash_effect)
 	end
 
     draw_image(axe_image, 100, 200)
@@ -80,11 +85,13 @@ close_window()
 | `draw_circle`    | `number center_x`, `number center_y`, `number radius`, `color color`                        |          |
 | `draw_ellipse`   | `number center_x`, `number center_y`, `number radius_h`, `number radius_v`, `color color`   |          |
 | `draw_triangle`  | `number x1`, `number y1`, `number x2`, `number y2`, `number x3`, `number y3`, `color color` |          |
-| `load_image`     | `string filepath`                                                                           | `string` |
-| `draw_image`     | `string uid`, `number x`, `number y`                                                        |          |
-| `load_audio`     | `TODO`                                                                                      |          |
+| `load_image`     | `string filepath`                                                                           | `uid`    |
+| `draw_image`     | `uid uid`, `number x`, `number y`                                                           |          |
 | `button_down`    | `button button`                                                                             | `bool`   |
 | `button_pressed` | `button button`                                                                             | `bool`   |
+| `load_sound`     | `string filepath`                                                                           | `uid`    |
+| `play_sound`     | `uid uid`                                                                                   |          |
+| `stop_sound`     | `uid uid`                                                                                   |          |
 
 ### Controller mappings
 
@@ -138,11 +145,16 @@ close_window()
 - https://github.com/raysan5/raylib
 - https://github.com/rxi/json.lua
 - https://dejavu-fonts.github.io/
+- https://freetestdata.com/audio-files/
 
 ## Cool tools
 
-- https://hardwaretester.com/gamepad
-- https://www.raylib.com/examples/core/loader.html?name=core_input_gamepad
+- Controller testing:
+    - https://hardwaretester.com/gamepad
+    - https://www.raylib.com/examples/core/loader.html?name=core_input_gamepad
+- Sound effect generators:
+    - https://www.bfxr.net
+    - https://sfxr.me
 
 ## Interesting games
 

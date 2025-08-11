@@ -10,6 +10,9 @@ test_camera_position = { x = 0, y = 0 }
 test_camera_speed = 200
 test_images_asset1 = load_image("tests/icons/icon_1.png")
 test_images_asset2 = load_image("tests/icons/icon_2.png")
+test_sounds_sound1 = load_sound("tests/sounds/effect1.wav")
+test_sounds_sound2 = load_sound("tests/sounds/song1.ogg")
+test_sounds_volume = 100
 
 function test_api()
 	draw_rect(100, 100, 300, 200, color.YELLOW)
@@ -140,11 +143,26 @@ function test_camera()
 end
 
 function test_images()
-	draw_text(string.format("uid: %s", test_images_asset1), 50, 50, 20, color.VIOLET)
-	draw_text(string.format("uid: %s", test_images_asset2), 50, 80, 20, color.VIOLET)
+	draw_text(string.format("uid: %s", test_images_asset1), 30, 30, 20, color.VIOLET)
+	draw_text(string.format("uid: %s", test_images_asset2), 30, 55, 20, color.VIOLET)
 
 	draw_image(test_images_asset1, 150, 150)
 	draw_image(test_images_asset2, 200, 200)
+end
+
+function test_sounds()
+	draw_text("Press button A to play a short sound effect.", 30, 30, 20, color.BLUE)
+	draw_text("Press button B to play a longer sound effect.", 30, 55, 20, color.BLUE)
+
+	if button_pressed(button.A) then
+		draw_text("Button A pressed", 30, 85, 20, color.YELLOW)
+		play_sound(test_sounds_sound1)
+	end
+
+	if button_pressed(button.B) then
+		draw_text("Button B pressed", 30, 85, 20, color.YELLOW)
+		play_sound(test_sounds_sound2)
+	end
 end
 
 while window_running() do
@@ -156,6 +174,7 @@ while window_running() do
 	-- test_buttons()
 	-- test_camera()
 	-- test_images()
+	-- test_sounds()
 
 	draw_info()
 	stop_drawing()
