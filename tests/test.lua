@@ -1,16 +1,15 @@
 math.randomseed(os.time())
 
+open_window(800, 800, "Sample Window")
+set_fps(60)
+
 test_button_square = { x = 400, y = 400 }
 test_button_color = color.RED
 test_button_speed = 200
-
 test_camera_position = { x = 0, y = 0 }
 test_camera_speed = 200
-
 test_images_asset1 = load_image("tests/icons/icon_1.png")
-
-open_window(800, 800, "Sample Window")
-set_fps(60)
+test_images_asset2 = load_image("tests/icons/icon_2.png")
 
 function test_api()
 	draw_rect(100, 100, 300, 200, color.YELLOW)
@@ -26,10 +25,10 @@ end
 function get_random_color()
 	local keys = {}
 	for k in pairs(color) do
-		table.insert(keys, k)  -- Collect all keys
+		table.insert(keys, k)
 	end
-	local randomKey = keys[math.random(1, #keys)]  -- Select a random key
-	return color[randomKey]  -- Return the corresponding color
+	local randomKey = keys[math.random(1, #keys)]
+	return color[randomKey]
 end
 
 function test_json()
@@ -140,6 +139,14 @@ function test_camera()
 	draw_text("This text doesn't move!", 10, 10, 20, color.VIOLET)
 end
 
+function test_images()
+	draw_text(string.format("uid: %s", test_images_asset1), 50, 50, 20, color.VIOLET)
+	draw_text(string.format("uid: %s", test_images_asset2), 50, 80, 20, color.VIOLET)
+
+	draw_image(test_images_asset1, 150, 150)
+	draw_image(test_images_asset2, 200, 200)
+end
+
 while window_running() do
 	start_drawing()
 	clear_window(color.BLACK)
@@ -148,6 +155,7 @@ while window_running() do
 	-- test_api()
 	-- test_buttons()
 	-- test_camera()
+	-- test_images()
 
 	draw_info()
 	stop_drawing()

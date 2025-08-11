@@ -3,6 +3,7 @@
 #include <getopt.h>
 #include <stdlib.h>
 #include <time.h>
+#include <string.h>
 
 #include "raylib.h"
 #include "lua.h"
@@ -24,31 +25,43 @@
 #define XBOX_ALIAS_2 "x-box"
 #define PS_ALIAS "playstation"
 
-typedef struct {
+typedef struct ExternalImage {
 	char uid[UID_LENGTH + 1];
-	const char* filepath;
+	Texture2D texture;
+	struct ExternalImage *next;
 } ExternalImage;
 
 typedef struct {
-} ExternalAudio;
+	ExternalImage *head;
+	ExternalImage *tail;
+	int count;
+} ImageList;
 
 typedef struct {
 	Font font;
 	int font_size;
 	Camera2D camera;
-	ExternalImage *images;
-	ExternalAudio *audio;
+	ImageList images;
 } Context;
 
 // Setting up global context.
 Context ctx = {0};
 
-static void generate_uid(char *uid) {
-	const char *chars = "0123456789abcdef";
-	for (size_t i = 0; i < UID_LENGTH; i++) {
-		uid[i] = chars[rand() % 16];
+static void generate_uid(char *str, size_t length) {
+	static const char charset[] = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+	size_t charset_size = sizeof(charset) - 1; // exclude null terminator
+
+	for (size_t i = 0; i < length; i++) {
+		int key = rand() % charset_size;
+		str[i] = charset[key];
 	}
-	uid[UID_LENGTH + 1] = '\0';
+	str[length] = '\0';
+}
+
+void init_image_list(ImageList *list) {
+	list->head = NULL;
+	list->tail = NULL;
+	list->count = 0;
 }
 
 static int lua_getfield_int(lua_State *L, int index, const char *key) {
@@ -67,7 +80,7 @@ static int lua_getfield_int_opt(lua_State *L, int index, const char *key, int de
 
 static int load_embedded_module(lua_State *L, const char *module_code, size_t code_len, const char *module_name) {
 	if (luaL_loadbuffer(L, module_code, code_len, module_name) || lua_pcall(L, 0, 1, 0)) {
-		fprintf(stderr, "Error loading %s: %s\n", module_name, lua_tostring(L, -1));
+		TraceLog(LOG_FATAL, "Error loading %s: %s\n", module_name, lua_tostring(L, -1));
 		return 0;
 	}
 	lua_setglobal(L, module_name);
@@ -380,10 +393,61 @@ static int l_button_pressed(lua_State *L) {
 }
 
 static int l_load_image(lua_State *L) {
-	return 0;
+	const char *filepath = luaL_checkstring(L, 1);
+
+	ExternalImage *img = malloc(sizeof(ExternalImage));
+	if (!img) {
+		TraceLog(LOG_FATAL, "Out of memory!");
+		return 0;
+	}
+
+	Image image = LoadImage(filepath);
+	if (!image.data) {
+		TraceLog(LOG_FATAL, "Failed to load image: %s\n", filepath);
+		free(img);
+		return 0;
+	}
+
+	img->texture = LoadTextureFromImage(image);
+	UnloadImage(image);
+
+	generate_uid(img->uid, UID_LENGTH);
+	img->next = NULL;
+
+	if (ctx.images.tail) {
+		ctx.images.tail->next = img;
+		ctx.images.tail = img;
+	} else {
+		ctx.images.head = img;
+		ctx.images.tail = img;
+	}
+	ctx.images.count++;
+
+	TraceLog(LOG_WARNING, "[adding]\t %s (%d)", img->uid, strlen(img->uid));
+
+	lua_pushstring(L, img->uid);
+	return 1;
 }
 
 static int l_load_audio(lua_State *L) {
+	return 0;
+}
+
+static int l_draw_image(lua_State *L) {
+	const char *uid = luaL_checkstring(L, 1);
+	int x = luaL_checknumber(L, 2);
+	int y = luaL_checknumber(L, 3);
+
+	ExternalImage *current = ctx.images.head;
+	while (current) {
+		if (strncmp(current->uid, uid, UID_LENGTH) == 0) {
+			/* TraceLog(LOG_WARNING, "[match]\t %s (%d)", uid, strlen(uid)); */
+			DrawTexture(current->texture, x, y, WHITE);
+			break;
+		}
+		current = current->next;
+	}
+
 	return 0;
 }
 
@@ -404,6 +468,7 @@ static void version(const char *argv0) {
 
 int main(int argc, char *argv[]) {
 	srand(time(NULL));
+	init_image_list(&ctx.images);
 
 	TraceLogLevel debug_level = LOG_WARNING;
 	const char *run_file = NULL;
@@ -472,6 +537,12 @@ int main(int argc, char *argv[]) {
 		lua_register(L, "get_width", l_get_width);
 		lua_register(L, "get_height", l_get_height);
 
+		lua_register(L, "load_image", l_load_image);
+		lua_register(L, "load_audio", l_load_audio);
+
+		lua_register(L, "button_down", l_button_down);
+		lua_register(L, "button_pressed", l_button_pressed);
+
 		lua_register(L, "draw_info", l_draw_info);
 		lua_register(L, "draw_rect", l_draw_rect);
 		lua_register(L, "draw_text", l_draw_text);
@@ -480,16 +551,11 @@ int main(int argc, char *argv[]) {
 		lua_register(L, "draw_circle", l_draw_circle);
 		lua_register(L, "draw_ellipse", l_draw_ellipse);
 		lua_register(L, "draw_triangle", l_draw_triangle);
-
-		lua_register(L, "load_image", l_load_image);
-		lua_register(L, "load_audio", l_load_audio);
-
-		lua_register(L, "button_down", l_button_down);
-		lua_register(L, "button_pressed", l_button_pressed);
+		lua_register(L, "draw_image", l_draw_image);
 
 		// Interpreting and running input file Lua script.
 		if (luaL_loadfile(L, run_file) || lua_pcall(L, 0, 0, 0)) {
-			fprintf(stderr, "Error: %s\n", lua_tostring(L, -1));
+			TraceLog(LOG_FATAL, "Error: %s\n", lua_tostring(L, -1));
 			return 1;
 		}
 

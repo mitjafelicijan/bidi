@@ -1,8 +1,9 @@
 **Bidi** is a lightweight framework and fantasy console designed for creating
 tiny video games, perfect for learning and having fun.  It takes heavy
 inspiration from [LÖVE](https://www.love2d.org/),
-[Pico8](https://www.lexaloffle.com/pico-8.php) and [Atari
-2600](https://en.wikipedia.org/wiki/Atari_2600).
+[Pico8](https://www.lexaloffle.com/pico-8.php), [Atari
+2600](https://en.wikipedia.org/wiki/Atari_2600) and [Windows
+3.1](https://en.wikipedia.org/wiki/Windows_3.1).
 
 You develop your games in Lua and you are only allowed to have one Lua file
 where all your code lives. You can then load external assets like images and
@@ -75,7 +76,8 @@ close_window()
 | `draw_circle`    | `number center_x`, `number center_y`, `number radius`, `color color`                        |          |
 | `draw_ellipse`   | `number center_x`, `number center_y`, `number radius_h`, `number radius_v`, `color color`   |          |
 | `draw_triangle`  | `number x1`, `number y1`, `number x2`, `number y2`, `number x3`, `number y3`, `color color` |          |
-| `load_image`     | `TODO`                                                                                      |          |
+| `load_image`     | `string filepath`                                                                           | `string` |
+| `draw_image`     | `string uid`, `number x`, `number y`                                                        |          |
 | `load_audio`     | `TODO`                                                                                      |          |
 | `button_down`    | `button button`                                                                             | `bool`   |
 | `button_pressed` | `button button`                                                                             | `bool`   |
@@ -137,6 +139,16 @@ close_window()
 
 - https://hardwaretester.com/gamepad
 - https://www.raylib.com/examples/core/loader.html?name=core_input_gamepad
+
+## Interesting games
+
+- https://www.old-games.com/download/3873/aethra-s-chronicles
+- https://www.old-games.com/download/10746/wintrek-1992
+- https://www.old-games.com/download/3887/bard-s-tale-1
+- https://www.old-games.com/download/3902/castle-of-the-winds
+- https://www.old-games.com/download/3923/decker
+- https://www.old-games.com/download/3920/darkspyre
+- https://www.old-games.com/download/6089/exile-3-ruined-world
 
 ## Development references
 
