@@ -9,6 +9,8 @@ vendor/lua*/**/*.o
 vendor/lua*/**/*.a
 stdlib/*.h
 fonts/*.h
+bidi.dSYM
 
 # Other
 tags
+.DS_Store
