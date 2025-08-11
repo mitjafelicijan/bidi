@@ -13,6 +13,7 @@
 #include "stdlib/json.h"
 #include "stdlib/color.h"
 #include "stdlib/button.h"
+#include "stdlib/helpers.h"
 
 #include "fonts/dejavusans_mono_bold.h"
 
@@ -593,6 +594,7 @@ int main(int argc, char *argv[]) {
 		if (!load_embedded_module(L, json, json_len, "json")) return 1;
 		if (!load_embedded_module(L, color, color_len, "color")) return 1;
 		if (!load_embedded_module(L, button, button_len, "button")) return 1;
+		if (!load_embedded_module(L, helpers, helpers_len, "helpers")) return 1;
 
 		// Registring Raylib mappings.
 		lua_register(L, "open_window", l_open_window);
