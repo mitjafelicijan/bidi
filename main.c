@@ -110,7 +110,7 @@ static int l_open_window(lua_State *L) {
 	int width = luaL_checknumber(L, 1);
 	int height = luaL_checknumber(L, 2);
 	const char *title = luaL_checkstring(L, 3);
-	SetConfigFlags(FLAG_WINDOW_RESIZABLE | FLAG_VSYNC_HINT | FLAG_WINDOW_HIGHDPI);
+	SetConfigFlags(FLAG_VSYNC_HINT | FLAG_WINDOW_HIGHDPI);
 	InitWindow(width, height, title);
 
 	ctx.font_size = FONT_IMPORT_SIZE;
