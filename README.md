@@ -71,6 +71,7 @@ close_window()
 | `set_fps`        | `number fps`                                                                                |          |
 | `get_fps`        |                                                                                             | `number` |
 | `get_dt`         |                                                                                             | `number` |
+| `get_time`       |                                                                                             | `number` |
 | `get_width`      |                                                                                             | `number` |
 | `get_height`     |                                                                                             | `number` |
 | `draw_info`      |                                                                                             |          |

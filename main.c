@@ -190,6 +190,11 @@ static int l_get_fps(lua_State *L) {
 	return 1;
 }
 
+static int l_get_time(lua_State *L) {
+	lua_pushnumber(L, GetTime());
+	return 1;
+}
+
 static int l_get_width(lua_State *L) {
 	lua_pushnumber(L, GetScreenWidth());
 	return 1;
@@ -641,6 +646,7 @@ int main(int argc, char *argv[]) {
 		lua_register(L, "set_fps", l_set_fps);
 		lua_register(L, "get_fps", l_get_fps);
 		lua_register(L, "get_dt", l_get_dt);
+		lua_register(L, "get_time", l_get_time);
 		lua_register(L, "get_width", l_get_width);
 		lua_register(L, "get_height", l_get_height);
 
