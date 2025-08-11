@@ -215,10 +215,10 @@ static int l_draw_info(lua_State *L) {
 	double runtime = GetTime();
 	int height = GetScreenHeight();
 
-	DrawRectangle(10, GetScreenHeight() - 90, 160, 80, DARKBLUE);
-	DrawTextEx(ctx.font, TextFormat("fps: %d", fps), (Vector2){ 20, height - 80 }, 20, 0, RAYWHITE);
-	DrawTextEx(ctx.font, TextFormat("run: %.4f", runtime), (Vector2){ 20, height - 60 }, 20, 0, RAYWHITE);
-	DrawTextEx(ctx.font, TextFormat("dt: %.4f", delta), (Vector2){ 20, height - 40 }, 20, 0, RAYWHITE);
+	DrawRectangle(10, height - 75, 150, 65, DARKBLUE);
+	DrawTextEx(ctx.font, TextFormat("fps: %d", fps), (Vector2){ 15, height - 70 }, 16, 0, RAYWHITE);
+	DrawTextEx(ctx.font, TextFormat("run: %.4f", runtime), (Vector2){ 15, height - 50 }, 16, 0, RAYWHITE);
+	DrawTextEx(ctx.font, TextFormat("dt: %.4f", delta), (Vector2){ 15, height - 30 }, 16, 0, RAYWHITE);
 
 	return 0;
 }
