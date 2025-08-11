@@ -26,6 +26,8 @@ sounds.
 open_window(800, 800, "My Game")
 set_fps(60)
 
+axe_image = load_image("images/axe.png")
+
 while window_running() do
     start_drawing()
     clear_window(color.BLACK)
@@ -42,6 +44,8 @@ while window_running() do
 	if button_down(button.PAD_UP) then
 		draw_text("Pad Up", 10, 10, 20, color.VIOLET)
 	end
+
+    draw_image(axe_image, 100, 200)
 
     draw_info()
     stop_drawing()
