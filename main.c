@@ -477,7 +477,7 @@ static int l_load_image(lua_State *L) {
 	}
 	ctx.images.count++;
 
-	TraceLog(LOG_WARNING, "[add_img] %s (%d)", img->uid, strlen(img->uid));
+	TraceLog(LOG_DEBUG, "[add_img] %s (%d)", img->uid, strlen(img->uid));
 
 	lua_pushstring(L, img->uid);
 	return 1;
@@ -522,7 +522,7 @@ static int l_load_sound(lua_State *L) {
 	}
 	ctx.sounds.count++;
 
-	TraceLog(LOG_WARNING, "[add_snd] %s (%d)", snd->uid, strlen(snd->uid));
+	TraceLog(LOG_DEBUG, "[add_snd] %s (%d)", snd->uid, strlen(snd->uid));
 
 	lua_pushstring(L, snd->uid);
 	return 1;
