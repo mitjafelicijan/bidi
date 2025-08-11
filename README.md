@@ -95,18 +95,18 @@ close_window()
 
 ### Controller mappings
 
-| Button             | Keyboard | Xbox          | Playstation   |
-| ------------------ | -------- | ------------- | ------------- |
-| `button.PAD_UP`    | `W`      | `D-pad Up`    | `D-pad Up`    |
-| `button.PAD_DOWN`  | `S`      | `D-pad Down`  | `D-pad Down`  |
-| `button.PAD_LEFT`  | `A`      | `D-pad Left`  | `D-pad Left`  |
-| `button.PAD_RIGHT` | `D`      | `D-pad Right` | `D-pad Right` |
-| `button.A`         | `L`      | `A`           | `Cross`       |
-| `button.B`         | `P`      | `B`           | `Circle`      |
-| `button.X`         | `K`      | `X`           | `Square`      |
-| `button.Y`         | `O`      | `Y`           | `Triangle`    |
-| `button.SELECT`    | `Q`      | `Back`        | `Share`       |
-| `button.START`     | `E`      | `Start`       | `Options`     |
+| Button             | Keyboard      | Xbox          | Playstation   |
+| ------------------ | ------------- | ------------- | ------------- |
+| `button.PAD_UP`    | `Arrow Up`    | `D-pad Up`    | `D-pad Up`    |
+| `button.PAD_DOWN`  | `Arrow Down`  | `D-pad Down`  | `D-pad Down`  |
+| `button.PAD_LEFT`  | `Arrow Left`  | `D-pad Left`  | `D-pad Left`  |
+| `button.PAD_RIGHT` | `Arrow Right` | `D-pad Right` | `D-pad Right` |
+| `button.A`         | `A`           | `A`           | `Cross`       |
+| `button.B`         | `S`           | `B`           | `Circle`      |
+| `button.X`         | `Q`           | `X`           | `Square`      |
+| `button.Y`         | `W`           | `Y`           | `Triangle`    |
+| `button.SELECT`    | `D`           | `Back`        | `Share`       |
+| `button.START`     | `E`           | `Start`       | `Options`     |
                                                         
 ### Default colors
 
